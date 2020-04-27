@@ -1,0 +1,2 @@
+rootProject.name='HydraMail'
+include ':app'
