@@ -2,4 +2,9 @@
     <string name="app_name">HydraMail</string>
     <string name="desc">My name is Chisom Chinenye Nwokwu and i am a Android Developer at Google with over 4 Years experience</string>
     <string name="heading">HEADING</string>
+    <string name="to_hint">To</string>
+    <string name="subject_hint">Subject</string>
+    <string name="message_hint">Message</string>
+    <string name="send_button_text">SEND</string>
+    <string name="get_started_string">GET STARTED</string>
 </resources>

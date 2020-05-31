@@ -13,6 +13,8 @@ import android.widget.Button;
 
 import java.util.Locale;
 
+import Fragments.MainActivity;
+
 public class ChooseAccount extends AppCompatActivity {
     private TextToSpeech tts;
     private boolean IsInitialVoiceFinished;
@@ -27,7 +29,7 @@ public class ChooseAccount extends AppCompatActivity {
         chooseAccount.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(ChooseAccount.this, ComposeMail.class);
+                Intent intent = new Intent(ChooseAccount.this, MainActivity.class);
                 startActivity(intent);
             }
         });

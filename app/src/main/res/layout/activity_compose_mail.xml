@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -7,35 +8,34 @@
     tools:context=".ComposeMail">
 
     <EditText
-        android:id="@+id/editText4"
+        android:id="@+id/to_edit_text"
         android:layout_width="350dp"
         android:layout_height="50dp"
-        android:layout_marginBottom="17dp"
         android:background="@drawable/compose_field"
         android:ems="10"
-        android:inputType="textEmailAddress"
-        android:paddingLeft="10dp"
-        android:hint="To"
-        app:layout_constraintBottom_toTopOf="@+id/editText5"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.508"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.981" />
-
-    <EditText
-        android:id="@+id/editText5"
-        android:layout_width="350dp"
-        android:layout_height="50dp"
-        android:layout_marginBottom="17dp"
-        android:background="@drawable/compose_field"
-        android:ems="10"
+        android:hint="@string/to_hint"
         android:inputType="textPersonName"
         android:paddingLeft="10dp"
-        android:hint="Subject"
-        app:layout_constraintBottom_toTopOf="@+id/messageCompose"
+        app:layout_constraintBottom_toTopOf="@+id/subject_edit_text"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.491"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.865" />
+
+    <EditText
+        android:id="@+id/subject_edit_text"
+        android:layout_width="350dp"
+        android:layout_height="50dp"
+        android:layout_marginBottom="48dp"
+        android:background="@drawable/compose_field"
+        android:ems="10"
+        android:hint="@string/subject_hint"
+        android:inputType="textPersonName"
+        android:paddingLeft="10dp"
+        app:layout_constraintBottom_toTopOf="@+id/messageCompose"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.508"
         app:layout_constraintStart_toStartOf="parent" />
 
     <EditText
@@ -47,7 +47,7 @@
         android:ems="10"
         android:inputType="textPersonName"
         android:paddingLeft="10dp"
-        android:hint="Message"
+        android:hint="@string/message_hint"
         android:lines="7"
         android:textAlignment="viewStart"
         android:paddingBottom="250dp"
@@ -62,7 +62,7 @@
         android:layout_height="wrap_content"
         android:layout_marginBottom="40dp"
         android:background="@drawable/button"
-        android:text="SEND"
+        android:text="@string/send_button_text"
         android:textColor="#FFFFFF"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
