@@ -19,7 +19,7 @@
     </TextView>
 
     <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/editText"
+        android:id="@+id/text_input_message"
         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -32,8 +32,8 @@
         app:layout_constraintTop_toBottomOf="@+id/textView"
         app:layout_constraintVertical_bias="0.084">
 
-        <EditText
-            android:id="@+id/etAuthorName"
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/message_edit_text"
             android:layout_width="match_parent"
             android:layout_height="200dp"
             android:ems="15"

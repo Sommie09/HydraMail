@@ -41,4 +41,9 @@ public class MainActivity extends AppCompatActivity {
         ToFragment toFragment = new ToFragment();
         this.getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, toFragment).addToBackStack(null).commit();
     }
+
+    public void showConfirmScreen(){
+        ConfirmFragment confirmFragment = new ConfirmFragment();
+        this.getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, confirmFragment).addToBackStack(null).commit();
+    }
 }
