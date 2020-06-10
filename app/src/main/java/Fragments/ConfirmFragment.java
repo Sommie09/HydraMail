@@ -2,6 +2,7 @@ package Fragments;
 
 import android.os.Bundle;
 
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import android.view.LayoutInflater;
@@ -20,7 +21,6 @@ public class ConfirmFragment extends Fragment {
     private TextView subjectTextView;
     private TextView messageTextView;
     String recipient;
-    String message;
 
 
     public ConfirmFragment() {
@@ -33,26 +33,30 @@ public class ConfirmFragment extends Fragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_confirm, container, false);
 
+        Bundle bundle = getArguments();
+
+        String recipient = bundle.getString("Recipient");
+        String subject = bundle.getString("Subject");
+        String message = bundle.getString("Message");
+
         toTextView = view.findViewById(R.id.to_text_view);
         subjectTextView = view.findViewById(R.id.subject_text_view);
         messageTextView = view.findViewById(R.id.message_text_view);
-
-
-        Bundle bundle = getArguments();
-        if(bundle != null) {
-            recipient = bundle.getString("toKey");
-            subject = bundle.getString("subjectKey");
-            message = bundle.getString("messageKey");
-        }
 
         toTextView.setText(recipient);
         subjectTextView.setText(subject);
         messageTextView.setText(message);
 
-        sendMail(recipient, message);
-
         return view;
+
     }
+
+
+
+
+        //sendMail(recipient, message);
+
+
 
     public void sendMail(String recipient, String message){
         new MaildroidX.Builder()
@@ -85,4 +89,6 @@ public class ConfirmFragment extends Fragment {
 
             .mail();
     }
+
+
 }

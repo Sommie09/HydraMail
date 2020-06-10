@@ -8,6 +8,8 @@ import android.widget.Button;
 import android.widget.EditText;
 
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 
 import com.example.hydramail.R;
 import com.google.android.material.textfield.TextInputEditText;
@@ -39,24 +41,27 @@ public class SubjectFragment extends Fragment {
         nextButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                MainActivity mainActivity = (MainActivity) getActivity();
-                mainActivity.showMessageScreen();
+                Bundle bundle = requireArguments();
 
-                Bundle bundle = new Bundle();
-                bundle.putString("subjectKey", subjectEditText.getText().toString());
+                String subject = subjectEditText.getText().toString();
+                String recipient = bundle.getString("Recipient");
 
-                ConfirmFragment confirmFragment = new ConfirmFragment();
-                confirmFragment.setArguments(bundle);
+                bundle.putString("Subject", subject);
+                bundle.putString("Recipient", recipient);
+
+                FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
+                FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+
+                MessageFragment messageFragment = new MessageFragment();
+                messageFragment.setArguments(bundle);
+
+                fragmentTransaction.replace(R.id.fragment_container, messageFragment);
+                fragmentTransaction.commit();
             }
         });
 
-        previousButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                MainActivity mainActivity = (MainActivity) getActivity();
-                mainActivity.showToScreen();
-            }
-        });
+//
+
 
 
         return view;

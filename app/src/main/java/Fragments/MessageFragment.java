@@ -9,6 +9,8 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 
 import com.example.hydramail.R;
 import com.google.android.material.textfield.TextInputEditText;
@@ -43,15 +45,25 @@ public class MessageFragment extends Fragment {
         finishButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                MainActivity mainActivity = (MainActivity) getActivity();
-                assert mainActivity != null;
-                mainActivity.showConfirmScreen();
+                Bundle bundle = requireArguments();
 
-                Bundle bundle = new Bundle();
-                bundle.putString("messageKey", messageEditText.getText().toString());
+                String message = messageEditText.getText().toString();
+                String recipient = bundle.getString("Recipient");
+                String subject = bundle.getString("Subject");
+
+                bundle.putString("Message", message);
+                bundle.putString("Recipient", recipient);
+                bundle.putString("Subject", subject);
+
+                FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
+                FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
 
                 ConfirmFragment confirmFragment = new ConfirmFragment();
                 confirmFragment.setArguments(bundle);
+
+
+                fragmentTransaction.replace(R.id.fragment_container, confirmFragment);
+                fragmentTransaction.commit();
             }
 
 
