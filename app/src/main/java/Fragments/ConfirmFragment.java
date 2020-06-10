@@ -9,6 +9,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.hydramail.R;
 
@@ -47,18 +48,13 @@ public class ConfirmFragment extends Fragment {
         subjectTextView.setText(subject);
         messageTextView.setText(message);
 
+        sendMail(recipient, message, subject);
+
         return view;
 
     }
 
-
-
-
-        //sendMail(recipient, message);
-
-
-
-    public void sendMail(String recipient, String message){
+    public void sendMail(String recipient, String message, String subject){
         new MaildroidX.Builder()
                 .smtp("smtp.mailtrap.io")
                 .smtpUsername("be2d320594386f")
@@ -66,19 +62,19 @@ public class ConfirmFragment extends Fragment {
                 .port("2525")
                 .type(MaildroidXType.HTML)
                 .to(recipient)
-                .from("someoneover@interenet.com")
+                .from("chisomnwokwu09@gmail.com")
                 .subject(subject)
                 .body(message)
                 .isJavascriptDisabled(true)
                 .onCompleteCallback(new MaildroidX.onCompleteCallback() {
                     @Override
                     public void onSuccess() {
-
+                        Toast.makeText(getActivity(), "Successful!", Toast.LENGTH_SHORT).show();
                     }
 
                     @Override
                     public void onFail(String s) {
-
+                        Toast.makeText(getActivity(), "Failed!", Toast.LENGTH_SHORT).show();
                     }
 
                     @Override
