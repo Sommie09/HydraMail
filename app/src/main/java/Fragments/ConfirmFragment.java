@@ -4,10 +4,13 @@ import android.os.Bundle;
 
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -17,11 +20,6 @@ import co.nedim.maildroidx.MaildroidX;
 import co.nedim.maildroidx.MaildroidXType;
 
 public class ConfirmFragment extends Fragment {
-    String subject;
-    private TextView toTextView;
-    private TextView subjectTextView;
-    private TextView messageTextView;
-    String recipient;
 
 
     public ConfirmFragment() {
@@ -36,19 +34,35 @@ public class ConfirmFragment extends Fragment {
 
         Bundle bundle = getArguments();
 
-        String recipient = bundle.getString("Recipient");
-        String subject = bundle.getString("Subject");
-        String message = bundle.getString("Message");
+        final String recipient = bundle.getString("Recipient");
+        final String subject = bundle.getString("Subject");
+        final String message = bundle.getString("Message");
 
-        toTextView = view.findViewById(R.id.to_text_view);
-        subjectTextView = view.findViewById(R.id.subject_text_view);
-        messageTextView = view.findViewById(R.id.message_text_view);
+        TextView toTextView = view.findViewById(R.id.to_text_view);
+        TextView subjectTextView = view.findViewById(R.id.subject_text_view);
+        TextView messageTextView = view.findViewById(R.id.message_text_view);
+        Button sendButton = view.findViewById(R.id.sendButton);
 
         toTextView.setText(recipient);
         subjectTextView.setText(subject);
         messageTextView.setText(message);
 
-        sendMail(recipient, message, subject);
+        sendButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                sendMail(recipient, message, subject);
+
+                FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
+                FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+
+                SuccessFragment successFragment = new SuccessFragment();
+
+                fragmentTransaction.replace(R.id.fragment_container, successFragment);
+                fragmentTransaction.commit();
+            }
+        });
+
+
 
         return view;
 
@@ -69,7 +83,6 @@ public class ConfirmFragment extends Fragment {
                 .onCompleteCallback(new MaildroidX.onCompleteCallback() {
                     @Override
                     public void onSuccess() {
-                        Toast.makeText(getActivity(), "Successful!", Toast.LENGTH_SHORT).show();
                     }
 
                     @Override

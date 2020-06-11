@@ -61,7 +61,6 @@ public class MessageFragment extends Fragment {
                 ConfirmFragment confirmFragment = new ConfirmFragment();
                 confirmFragment.setArguments(bundle);
 
-
                 fragmentTransaction.replace(R.id.fragment_container, confirmFragment);
                 fragmentTransaction.commit();
             }
