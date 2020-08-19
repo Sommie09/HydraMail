@@ -13,18 +13,19 @@
         android:roundIcon="@mipmap/ic_launcher_hydra"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".ChooseAccount"></activity>
+        <activity android:name=".ChooseAccount">
+        </activity>
 
 
-        <activity android:name=".SplashScreen">
+        <activity android:name=".SplashScreen"
+            android:theme="@style/SplashScreen">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".StartActivity" />
-        <activity android:name="Fragments.MainActivity" />
+        <activity android:name=".MainActivity" />
     </application>
 
 </manifest>

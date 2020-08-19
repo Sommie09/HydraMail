@@ -1,4 +1,4 @@
-package Fragments;
+package com.example.hydramail.fragments;
 
 import android.os.Bundle;
 

@@ -1,18 +1,24 @@
-package Fragments;
+package com.example.hydramail.fragments;
 
+import android.os.Build;
 import android.os.Bundle;
+import android.os.Handler;
+import android.speech.tts.TextToSpeech;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.EditText;
 
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
+import com.example.hydramail.MainActivity;
 import com.example.hydramail.R;
 import com.google.android.material.textfield.TextInputEditText;
+
+import java.util.Locale;
 
 
 /**
@@ -21,6 +27,8 @@ import com.google.android.material.textfield.TextInputEditText;
 public class SubjectFragment extends Fragment {
     private Button nextButton;
     private Button previousButton;
+    private TextToSpeech tts;
+    private boolean IsInitialVoiceFinished;
 
     public SubjectFragment() {
         // Required empty public constructor
@@ -36,6 +44,7 @@ public class SubjectFragment extends Fragment {
 
         nextButton = view.findViewById(R.id.nextButtonSubject);
         previousButton = view.findViewById(R.id.previousButtonSubject);
+
         final TextInputEditText subjectEditText = view.findViewById(R.id.subject_edit_text);
 
         nextButton.setOnClickListener(new View.OnClickListener() {
@@ -60,10 +69,47 @@ public class SubjectFragment extends Fragment {
             }
         });
 
-//
+        previousButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                MainActivity mainActivity = (MainActivity) getActivity();
+                mainActivity.showToScreen();
+            }
+        });
 
+        IsInitialVoiceFinished = false;
+
+        tts = new TextToSpeech(getContext(), new TextToSpeech.OnInitListener() {
+            @Override
+            public void onInit(int status) {
+                if (status == TextToSpeech.SUCCESS) {
+                    int result = tts.setLanguage(Locale.ENGLISH);
+                    if (result == TextToSpeech.LANG_MISSING_DATA || result == TextToSpeech.LANG_NOT_SUPPORTED) {
+                        Log.e("TTS", "This Language is not supported");
+                    }
+                    speak("Tap on your screen, Please speak subject of your mail");
+                    new Handler().postDelayed(new Runnable() {
+                        @Override
+                        public void run() {
+                            IsInitialVoiceFinished=true;
+                        }
+                    }, 3000);
+                } else {
+                    Log.e("TTS", "Initilization Failed!");
+                }
+            }
+        });
 
 
         return view;
+    }
+
+    private void speak(String text){
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            tts.speak(text, TextToSpeech.QUEUE_FLUSH, null, null);
+        }else{
+            tts.speak(text, TextToSpeech.QUEUE_FLUSH, null);
+        }
     }
 }

@@ -1,4 +1,4 @@
-package Fragments;
+package com.example.hydramail;
 
 import android.os.Bundle;
 
@@ -7,6 +7,8 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 
 import com.example.hydramail.R;
+import com.example.hydramail.fragments.SubjectFragment;
+import com.example.hydramail.fragments.ToFragment;
 
 public class MainActivity extends AppCompatActivity{
 
@@ -32,24 +34,13 @@ public class MainActivity extends AppCompatActivity{
                 .replace(R.id.fragment_container, subjectFragment)
                 .addToBackStack(null)
                 .commit();
-
     }
 
-//    public void showMessageScreen (){
-//        MessageFragment messageFragment = new MessageFragment();
-//        this.getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, messageFragment).addToBackStack(null).commit();
-//
-//    }
-
-//    public void showToScreen(){
-//        ToFragment toFragment = new ToFragment();
-//        this.getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, toFragment).addToBackStack(null).commit();
-//    }
-
-    public void showConfirmScreen(){
-        ConfirmFragment confirmFragment = new ConfirmFragment();
-        this.getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, confirmFragment).addToBackStack(null).commit();
+    public void showToScreen(){
+        ToFragment toFragment = new ToFragment();
+        this.getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, toFragment).addToBackStack(null).commit();
     }
+
 
 
 }

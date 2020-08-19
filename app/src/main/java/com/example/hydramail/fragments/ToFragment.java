@@ -1,14 +1,15 @@
-package Fragments;
+package com.example.hydramail.fragments;
 
-import android.content.Context;
+import android.os.Build;
 import android.os.Bundle;
+import android.os.Handler;
+import android.speech.tts.TextToSpeech;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.EditText;
 
-import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
@@ -16,12 +17,16 @@ import androidx.fragment.app.FragmentTransaction;
 import com.example.hydramail.R;
 import com.google.android.material.textfield.TextInputEditText;
 
+import java.util.Locale;
+
 
 /**
  * A simple {@link Fragment} subclass.
  */
 public class ToFragment extends Fragment {
     private Button nextButton;
+    private TextToSpeech tts;
+    private boolean IsInitialVoiceFinished;
 
 
     public ToFragment() {
@@ -55,7 +60,43 @@ public class ToFragment extends Fragment {
 
             }
         });
+
+
+        IsInitialVoiceFinished = false;
+
+        tts = new TextToSpeech(getContext(), new TextToSpeech.OnInitListener() {
+            @Override
+            public void onInit(int status) {
+                if (status == TextToSpeech.SUCCESS) {
+                    int result = tts.setLanguage(Locale.ENGLISH);
+                    if (result == TextToSpeech.LANG_MISSING_DATA || result == TextToSpeech.LANG_NOT_SUPPORTED) {
+                        Log.e("TTS", "This Language is not supported");
+                    }
+                    speak("Tap on your screen, Please speak recipient email, spell out email address carefully");
+                    new Handler().postDelayed(new Runnable() {
+                        @Override
+                        public void run() {
+                            IsInitialVoiceFinished=true;
+                        }
+                    }, 3000);
+                } else {
+                    Log.e("TTS", "Initilization Failed!");
+                }
+            }
+        });
+
+
         return view;
+
+    }
+
+    private void speak(String text){
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            tts.speak(text, TextToSpeech.QUEUE_FLUSH, null, null);
+        }else{
+            tts.speak(text, TextToSpeech.QUEUE_FLUSH, null);
+        }
     }
 }
 

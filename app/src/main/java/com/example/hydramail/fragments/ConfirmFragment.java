@@ -1,12 +1,12 @@
-package Fragments;
+package com.example.hydramail.fragments;
 
 import android.os.Bundle;
 
-import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
+import android.speech.tts.TextToSpeech;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,6 +20,8 @@ import co.nedim.maildroidx.MaildroidX;
 import co.nedim.maildroidx.MaildroidXType;
 
 public class ConfirmFragment extends Fragment {
+    private TextToSpeech tts;
+    private boolean IsInitialVoiceFinished;
 
 
     public ConfirmFragment() {
@@ -61,6 +63,8 @@ public class ConfirmFragment extends Fragment {
                 fragmentTransaction.commit();
             }
         });
+
+
 
 
 

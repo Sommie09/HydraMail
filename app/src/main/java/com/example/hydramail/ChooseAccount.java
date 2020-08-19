@@ -13,8 +13,6 @@ import android.widget.Button;
 
 import java.util.Locale;
 
-import Fragments.MainActivity;
-
 public class ChooseAccount extends AppCompatActivity {
     private TextToSpeech tts;
     private boolean IsInitialVoiceFinished;
@@ -35,38 +33,38 @@ public class ChooseAccount extends AppCompatActivity {
         });
 
 
-        IsInitialVoiceFinished = false ;
-
-        tts = new TextToSpeech(this, new TextToSpeech.OnInitListener() {
-            @Override
-            public void onInit(int status) {
-                if (status == TextToSpeech.SUCCESS) {
-                    int result = tts.setLanguage(Locale.ENGLISH);
-                    if (result == TextToSpeech.LANG_MISSING_DATA || result == TextToSpeech.LANG_NOT_SUPPORTED) {
-                        Log.e("TTS", "This Language is not supported");
-                    }
-                    speak("Please choose a mail account");
-                    new Handler().postDelayed(new Runnable() {
-                        @Override
-                        public void run() {
-                            IsInitialVoiceFinished=true;
-                        }
-                    }, 1000);
-                } else {
-                    Log.e("TTS", "Initilization Failed!");
-                }
-            }
-        });
+//        IsInitialVoiceFinished = false;
+//
+//        tts = new TextToSpeech(this, new TextToSpeech.OnInitListener() {
+//            @Override
+//            public void onInit(int status) {
+//                if (status == TextToSpeech.SUCCESS) {
+//                    int result = tts.setLanguage(Locale.ENGLISH);
+//                    if (result == TextToSpeech.LANG_MISSING_DATA || result == TextToSpeech.LANG_NOT_SUPPORTED) {
+//                        Log.e("TTS", "This Language is not supported");
+//                    }
+//                    speak("Please choose a mail account");
+//                    new Handler().postDelayed(new Runnable() {
+//                        @Override
+//                        public void run() {
+//                            IsInitialVoiceFinished=true;
+//                        }
+//                    }, 1000);
+//                } else {
+//                    Log.e("TTS", "Initilization Failed!");
+//                }
+//            }
+//        });
     }
 
-    private void speak(String text){
-
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            tts.speak(text, TextToSpeech.QUEUE_FLUSH, null, null);
-        }else{
-            tts.speak(text, TextToSpeech.QUEUE_FLUSH, null);
-        }
-    }
+//    private void speak(String text){
+//
+//        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+//            tts.speak(text, TextToSpeech.QUEUE_FLUSH, null, null);
+//        }else{
+//            tts.speak(text, TextToSpeech.QUEUE_FLUSH, null);
+//        }
+//    }
 
 
 

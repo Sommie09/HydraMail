@@ -1,111 +1,93 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
+<LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
     <TextView
         android:id="@+id/to_edit_text_sendscreen"
+        android:layout_gravity="center"
         android:layout_width="350dp"
         android:layout_height="50dp"
-        android:layout_marginTop="84dp"
-        android:layout_marginBottom="10dp"
         android:background="@drawable/bg_button"
-        android:ems="10"
+        android:fontFamily="@font/lato_regular"
         android:paddingStart="10dp"
         android:paddingLeft="10dp"
-        android:paddingTop="10dp"
+        android:paddingTop="12dp"
+        android:layout_marginTop="40dp"
         android:text="@string/to_hint"
         android:textColor="#FFFFFF"
-        android:textSize="20dp"
-        app:layout_constraintBottom_toTopOf="@+id/to_text_view"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.491"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.0" />
+        android:textSize="20dp" />
 
     <TextView
+        android:layout_marginStart="33dp"
+        android:id="@+id/to_text_view"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="15dp"
+        android:text="chisomnwokwu09@gmail.com" />
+
+    <TextView
+       android:layout_margin="20dp"
+        android:layout_gravity="center"
         android:id="@+id/subject_edit_text_sendscreen"
         android:layout_width="350dp"
         android:layout_height="50dp"
-        android:layout_marginBottom="20dp"
         android:background="@drawable/bg_button"
-        android:ems="10"
+        android:fontFamily="@font/lato_regular"
         android:paddingStart="10dp"
         android:paddingLeft="10dp"
-        android:paddingTop="10dp"
+        android:paddingTop="12dp"
         android:text="@string/subject_hint"
         android:textColor="#FFFFFF"
-        android:textSize="20dp"
-        app:layout_constraintBottom_toTopOf="@+id/subject_text_view"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.508"
-        app:layout_constraintStart_toStartOf="parent" />
+        android:textSize="20dp" />
 
     <TextView
+        android:layout_marginStart="33dp"
+        android:id="@+id/subject_text_view"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAllCaps="true"
+        android:text="Job Application" />
+
+
+    <TextView
+        android:fontFamily="@font/lato_regular"
         android:id="@+id/messageCompose_sendscreen"
         android:layout_width="350dp"
         android:layout_height="50dp"
-        android:layout_marginBottom="32dp"
         android:background="@drawable/compose_field"
         android:backgroundTint="@color/colorPrimary"
-        android:ems="10"
-        android:lines="7"
+       android:layout_margin="20sp"
+        android:layout_gravity="center"
         android:paddingStart="10dp"
         android:paddingLeft="10dp"
-        android:paddingTop="10dp"
+        android:paddingTop="12dp"
         android:text="@string/message_hint"
-        android:textAlignment="viewStart"
         android:textColor="#FFFFFF"
-        android:textSize="20dp"
-        app:layout_constraintBottom_toTopOf="@+id/message_text_view"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.508"
-        app:layout_constraintStart_toStartOf="parent" />
+        android:textSize="20dp" />
+
+    <TextView
+        android:id="@+id/message_text_view"
+        android:layout_width="350dp"
+        android:layout_height="wrap_content"
+        android:textAlignment="center"
+        android:layout_marginStart="33dp"
+        android:text="I would want to apply for a job at your company, this would give me the chance to be able to work very well unlike in my other company"
+        />
 
     <Button
         android:id="@+id/sendButton"
         android:layout_width="300dp"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="40dp"
         android:background="@drawable/button"
         android:text="@string/send_button_text"
+        android:layout_marginTop="100dp"
+        android:layout_gravity="center"
         android:textColor="#FFFFFF"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.495"
-        app:layout_constraintStart_toStartOf="parent" />
+        />
 
-    <TextView
-        android:id="@+id/to_text_view"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="4dp"
-        android:text="TextView"
-        app:layout_constraintBottom_toTopOf="@+id/subject_edit_text_sendscreen"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
 
-    <TextView
-        android:id="@+id/subject_text_view"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="16dp"
-        android:text="TextView"
-        app:layout_constraintBottom_toTopOf="@+id/messageCompose_sendscreen"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
 
-    <TextView
-        android:id="@+id/message_text_view"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="268dp"
-        android:text="TextView"
-        app:layout_constraintBottom_toTopOf="@+id/sendButton"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
-</androidx.constraintlayout.widget.ConstraintLayout>
+</LinearLayout>
