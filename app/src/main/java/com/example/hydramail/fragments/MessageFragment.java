@@ -1,8 +1,10 @@
 package com.example.hydramail.fragments;
 
+import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
+import android.speech.RecognizerIntent;
 import android.speech.tts.TextToSpeech;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -10,6 +12,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 
+import androidx.annotation.Nullable;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
@@ -18,7 +22,10 @@ import com.example.hydramail.MainActivity;
 import com.example.hydramail.R;
 import com.google.android.material.textfield.TextInputEditText;
 
+import java.util.ArrayList;
 import java.util.Locale;
+
+import static android.app.Activity.RESULT_OK;
 
 
 /**
@@ -29,6 +36,10 @@ public class MessageFragment extends Fragment {
     private Button previousButton;
     private TextToSpeech tts;
     private boolean IsInitialVoiceFinished;
+    private ConstraintLayout screenClick;
+    TextInputEditText messageEditText;
+
+    private static final int RECOGNIZER_RESULT = 1;
 
     public MessageFragment() {
         // Required empty public constructor
@@ -43,7 +54,18 @@ public class MessageFragment extends Fragment {
 
         finishButton = view.findViewById(R.id.finishButtonMessage);
         previousButton = view.findViewById(R.id.previousButtonMessage);
-        final TextInputEditText messageEditText = view.findViewById(R.id.message_edit_text);
+        messageEditText = view.findViewById(R.id.message_edit_text);
+        screenClick = view.findViewById(R.id.message_fragment_screen);
+
+        screenClick.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent speechIntent = new Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH);
+                speechIntent.putExtra(RecognizerIntent.EXTRA_LANGUAGE_MODEL, RecognizerIntent.LANGUAGE_MODEL_FREE_FORM);
+                speechIntent.putExtra(RecognizerIntent.EXTRA_PROMPT, "Speech to Text");
+                startActivityForResult(speechIntent, 1);
+            }
+        });
 
 
         finishButton.setOnClickListener(new View.OnClickListener() {
@@ -114,6 +136,16 @@ public class MessageFragment extends Fragment {
         }else{
             tts.speak(text, TextToSpeech.QUEUE_FLUSH, null);
         }
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+
+        if(requestCode == RECOGNIZER_RESULT && resultCode == RESULT_OK){
+            ArrayList<String> matches = data.getStringArrayListExtra(RecognizerIntent.EXTRA_RESULTS);
+            messageEditText.setText(matches.get(0));
+        }
+        super.onActivityResult(requestCode, resultCode, data);
     }
 
 
