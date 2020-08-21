@@ -97,7 +97,6 @@ public class ToFragment extends Fragment {
                     if (result == TextToSpeech.LANG_MISSING_DATA || result == TextToSpeech.LANG_NOT_SUPPORTED) {
                         Log.e("TTS", "This Language is not supported");
                     }
-                    //speak("Tap on your screen, Please speak recipient email, spell out email address carefully");
                     speak("Tap on your screen, Please speak recipient email, spell out email address carefully");
                     new Handler().postDelayed(new Runnable() {
                         @Override
