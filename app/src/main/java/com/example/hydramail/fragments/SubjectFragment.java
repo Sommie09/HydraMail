@@ -115,9 +115,9 @@ public class SubjectFragment extends Fragment {
                         public void run() {
                             IsInitialVoiceFinished=true;
                         }
-                    }, 3000);
+                    }, 1000);
                 } else {
-//                    Log.e("TTS", "Initilization Failed!");
+                    Log.e("TTS", "Initilization Failed!");
                 }
             }
         });
@@ -140,7 +140,8 @@ public class SubjectFragment extends Fragment {
 
         if(requestCode == RECOGNIZER_RESULT && resultCode == RESULT_OK){
             ArrayList<String> matches = data.getStringArrayListExtra(RecognizerIntent.EXTRA_RESULTS);
-            subjectEditText.setText(matches.get(0));
+            //subjectEditText.setText(matches.get(0));
+            String rawInput = matches.get(0);
         }
         super.onActivityResult(requestCode, resultCode, data);
     }
