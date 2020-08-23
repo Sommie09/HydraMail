@@ -133,6 +133,18 @@ public class ToFragment extends Fragment {
             String spaces = rawInput.replaceAll("\\s", "");
             String email = spaces.replaceAll("at", "@");
             toEditText.setText(email);
+
+            String emailPattern = "[a-zA-Z0-9._-]+@[a-z]+\\.+[a-z]+";
+
+            if(toEditText.getText().toString().isEmpty()) {
+                speak("Please enter email address");
+            }else {
+                if (toEditText.getText().toString().trim().matches(emailPattern)) {
+                    speak("Valid Email, Please tap below your screen");
+                } else {
+                    speak("Invalid Email, Please tap screen again");
+                }
+            }
         }
         super.onActivityResult(requestCode, resultCode, data);
     }
