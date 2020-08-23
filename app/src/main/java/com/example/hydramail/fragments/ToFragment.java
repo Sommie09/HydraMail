@@ -97,7 +97,7 @@ public class ToFragment extends Fragment {
                     if (result == TextToSpeech.LANG_MISSING_DATA || result == TextToSpeech.LANG_NOT_SUPPORTED) {
                         Log.e("TTS", "This Language is not supported");
                     }
-                    speak("Tap on your screen, Please speak recipient email, spell out email address carefully");
+                    speak("Tap on your screen, Please speak recipient email, spell out email address carefully. \n Sample \n\n j \n\n o\n\n h\n\n n\n\n d\n\n o\n\n e\n\n at gmail.com \n\n johndoe@gmail.com. \n Tap in 3 \n\n 2 \n\n 1");
                     new Handler().postDelayed(new Runnable() {
                         @Override
                         public void run() {
@@ -129,7 +129,10 @@ public class ToFragment extends Fragment {
 
         if(requestCode == RECOGNIZER_RESULT && resultCode == RESULT_OK){
             ArrayList<String> matches = data.getStringArrayListExtra(RecognizerIntent.EXTRA_RESULTS);
-            toEditText.setText(matches.get(0));
+            String rawInput = matches.get(0);
+            String spaces = rawInput.replaceAll("\\s", "");
+            String email = spaces.replaceAll("at", "@");
+            toEditText.setText(email);
         }
         super.onActivityResult(requestCode, resultCode, data);
     }
