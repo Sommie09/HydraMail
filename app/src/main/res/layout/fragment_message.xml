@@ -35,15 +35,9 @@
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/message_edit_text"
             android:layout_width="match_parent"
-            android:layout_height="200dp"
-            android:ems="15"
-            android:hint="Message:"
-            android:importantForAutofill="no"
-            android:maxLength="50"
-            android:paddingBottom="170dp"
-            android:inputType="text"
-            android:paddingLeft="10dp" />
+            android:layout_height="200dp" />
     </com.google.android.material.textfield.TextInputLayout>
+
 
 
     <ImageView

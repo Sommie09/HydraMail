@@ -70,10 +70,9 @@
 
     <TextView
         android:id="@+id/message_text_view"
-        android:layout_width="350dp"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textAlignment="center"
-        android:layout_marginStart="33dp"
+        android:lines="7"
         android:text="I would want to apply for a job at your company, this would give me the chance to be able to work very well unlike in my other company"
         />
 

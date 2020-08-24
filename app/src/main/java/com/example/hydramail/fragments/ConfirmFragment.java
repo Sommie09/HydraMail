@@ -79,8 +79,7 @@ public class ConfirmFragment extends Fragment {
                     if (result == TextToSpeech.LANG_MISSING_DATA || result == TextToSpeech.LANG_NOT_SUPPORTED) {
                         Log.e("TTS", "This Language is not supported");
                     }
-                   //speak("Please confirm message, you are sending to"+ recipient+ "your subject is "+subject+ "Your message is "+ message+ ".Tap on your screen to send");
-                    speak("Hello confirm message, you are sending to"+ recipient);
+                   speak("Please confirm message, you are sending to\n\n\n\n"+ recipient+ "\n\n\n\nyour subject is \n\n\n\n"+subject+ "\n\n\n\n\nYour message is\n\n\n\n "+message+ "\n\n\n\nTap on your screen to send");
                     new Handler().postDelayed(new Runnable() {
                         @Override
                         public void run() {

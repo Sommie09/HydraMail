@@ -141,7 +141,15 @@ public class SubjectFragment extends Fragment {
         if(requestCode == RECOGNIZER_RESULT && resultCode == RESULT_OK){
             ArrayList<String> matches = data.getStringArrayListExtra(RecognizerIntent.EXTRA_RESULTS);
             subjectEditText.setText(matches.get(0));
+
+            if(subjectEditText.getText().toString().isEmpty()) {
+                speak("Please enter email subject");
+            }else{
+                speak("Valid, Please confirm subject \n "+ subjectEditText.getText()+ "\n \n \nTap below screen to continue");
+
+            }
         }
         super.onActivityResult(requestCode, resultCode, data);
     }
 }
+

@@ -144,6 +144,14 @@ public class MessageFragment extends Fragment {
         if(requestCode == RECOGNIZER_RESULT && resultCode == RESULT_OK){
             ArrayList<String> matches = data.getStringArrayListExtra(RecognizerIntent.EXTRA_RESULTS);
             messageEditText.setText(matches.get(0));
+
+
+            if(messageEditText.getText().toString().isEmpty()) {
+                speak("Please enter email message");
+            }else{
+                speak("Valid, Please confirm message \n "+ messageEditText.getText()+ "\n \n \nTap below screen to continue");
+
+            }
         }
         super.onActivityResult(requestCode, resultCode, data);
     }

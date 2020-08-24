@@ -8,6 +8,7 @@ import android.speech.RecognizerIntent;
 import android.speech.tts.TextToSpeech;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
@@ -55,6 +56,15 @@ public class ToFragment extends Fragment {
         nextButton = view.findViewById(R.id.nextButtonTo);
         toEditText = view.findViewById(R.id.to_edit_text);
 
+        View.OnTouchListener otl = new View.OnTouchListener() {
+            public boolean onTouch (View v, MotionEvent event) {
+                return true; // the listener has consumed the event
+            }
+        };
+
+        toEditText.setOnTouchListener(otl);
+
+
         screenClick.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -97,13 +107,13 @@ public class ToFragment extends Fragment {
                     if (result == TextToSpeech.LANG_MISSING_DATA || result == TextToSpeech.LANG_NOT_SUPPORTED) {
                         Log.e("TTS", "This Language is not supported");
                     }
-                    speak("Tap on your screen, Please speak recipient email, spell out email address carefully. \n Sample \n\n j \n\n o\n\n h\n\n n\n\n d\n\n o\n\n e\n\n at gmail.com \n\n johndoe@gmail.com. \n Tap in 3 \n\n 2 \n\n 1");
+                    //speak("Tap on your screen, Please speak recipient email, spell out email address carefully. \n Sample \n\n j \n\n o\n\n h\n\n n\n\n d\n\n o\n\n e\n\n at gmail.com \n\n johndoe@gmail.com. \n Tap in 3 \n\n 2 \n\n 1");
                     new Handler().postDelayed(new Runnable() {
                         @Override
                         public void run() {
                             IsInitialVoiceFinished=true;
                         }
-                    }, 3000);
+                    }, 1000);
                 } else {
                     Log.e("TTS", "Initilization Failed!");
                 }
@@ -140,7 +150,7 @@ public class ToFragment extends Fragment {
                 speak("Please enter email address");
             }else {
                 if (toEditText.getText().toString().trim().matches(emailPattern)) {
-                    speak("Valid Email, Please tap below your screen");
+                    speak("Valid Email, Please confirm message \n "+ toEditText.getText()+ "\n \n \nTap below screen to continue");
                 } else {
                     speak("Invalid Email, Please tap screen again");
                 }
