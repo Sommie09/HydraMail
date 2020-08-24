@@ -8,6 +8,7 @@ import android.speech.RecognizerIntent;
 import android.speech.tts.TextToSpeech;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
@@ -33,7 +34,6 @@ import static android.app.Activity.RESULT_OK;
  */
 public class MessageFragment extends Fragment {
     private Button finishButton;
-    private Button previousButton;
     private TextToSpeech tts;
     private boolean IsInitialVoiceFinished;
     private ConstraintLayout screenClick;
@@ -53,9 +53,16 @@ public class MessageFragment extends Fragment {
 
 
         finishButton = view.findViewById(R.id.finishButtonMessage);
-        previousButton = view.findViewById(R.id.previousButtonMessage);
         messageEditText = view.findViewById(R.id.message_edit_text);
         screenClick = view.findViewById(R.id.message_fragment_screen);
+
+        View.OnTouchListener otl = new View.OnTouchListener() {
+            public boolean onTouch (View v, MotionEvent event) {
+                return true; // the listener has consumed the event
+            }
+        };
+
+        messageEditText.setOnTouchListener(otl);
 
         screenClick.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -94,13 +101,6 @@ public class MessageFragment extends Fragment {
 
         });
 
-        previousButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                MainActivity mainActivity = (MainActivity) getActivity();
-                mainActivity.showSubjectScreen();
-            }
-        });
 
         IsInitialVoiceFinished = false;
 
@@ -149,11 +149,31 @@ public class MessageFragment extends Fragment {
             if(messageEditText.getText().toString().isEmpty()) {
                 speak("Please enter email message");
             }else{
-                speak("Valid, Please confirm message \n "+ messageEditText.getText()+ "\n \n \nTap below screen to continue");
+                speak("Valid \n \n, Please confirm message \n "+ messageEditText.getText()+ "\n \n \nTap below screen to continue");
 
             }
         }
         super.onActivityResult(requestCode, resultCode, data);
+    }
+
+
+    @Override
+    public void onStop()
+    {
+        super.onStop();
+
+        if(tts != null){
+            tts.shutdown();
+        }
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+
+        if(tts != null){
+            tts.shutdown();
+        }
     }
 
 

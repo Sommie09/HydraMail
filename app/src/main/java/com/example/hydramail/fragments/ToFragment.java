@@ -107,7 +107,7 @@ public class ToFragment extends Fragment {
                     if (result == TextToSpeech.LANG_MISSING_DATA || result == TextToSpeech.LANG_NOT_SUPPORTED) {
                         Log.e("TTS", "This Language is not supported");
                     }
-                    //speak("Tap on your screen, Please speak recipient email, spell out email address carefully. \n Sample \n\n j \n\n o\n\n h\n\n n\n\n d\n\n o\n\n e\n\n at gmail.com \n\n johndoe@gmail.com. \n Tap in 3 \n\n 2 \n\n 1");
+                    speak("Tap on your screen, Please speak recipient email, spell out email address carefully. \n Sample \n\n j \n\n o\n\n h\n\n n\n\n d\n\n o\n\n e\n\n at gmail.com \n\n johndoe@gmail.com. \n Tap in 3 \n\n 2 \n\n 1");
                     new Handler().postDelayed(new Runnable() {
                         @Override
                         public void run() {
@@ -157,6 +157,25 @@ public class ToFragment extends Fragment {
             }
         }
         super.onActivityResult(requestCode, resultCode, data);
+    }
+
+    @Override
+    public void onStop()
+    {
+        super.onStop();
+
+        if(tts != null){
+            tts.shutdown();
+        }
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+
+        if(tts != null){
+            tts.shutdown();
+        }
     }
 }
 

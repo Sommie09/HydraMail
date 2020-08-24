@@ -138,4 +138,24 @@ public class ConfirmFragment extends Fragment {
     }
 
 
+    @Override
+    public void onStop()
+    {
+        super.onStop();
+
+        if(tts != null){
+            tts.shutdown();
+        }
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+
+        if(tts != null){
+            tts.shutdown();
+        }
+    }
+
+
 }

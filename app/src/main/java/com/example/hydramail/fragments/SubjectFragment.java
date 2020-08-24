@@ -8,6 +8,7 @@ import android.speech.RecognizerIntent;
 import android.speech.tts.TextToSpeech;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
@@ -33,7 +34,6 @@ import static android.app.Activity.RESULT_OK;
  */
 public class SubjectFragment extends Fragment {
     private Button nextButton;
-    private Button previousButton;
     private TextToSpeech tts;
     private boolean IsInitialVoiceFinished;
     private ConstraintLayout screenClick;
@@ -54,10 +54,18 @@ public class SubjectFragment extends Fragment {
 
 
         nextButton = view.findViewById(R.id.nextButtonSubject);
-        previousButton = view.findViewById(R.id.previousButtonSubject);
+
 
         subjectEditText = view.findViewById(R.id.subject_edit_text);
         screenClick = view.findViewById(R.id.subject_fragment_screen);
+
+        View.OnTouchListener otl = new View.OnTouchListener() {
+            public boolean onTouch (View v, MotionEvent event) {
+                return true; // the listener has consumed the event
+            }
+        };
+
+        subjectEditText.setOnTouchListener(otl);
 
         screenClick.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -91,13 +99,6 @@ public class SubjectFragment extends Fragment {
             }
         });
 
-        previousButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                MainActivity mainActivity = (MainActivity) getActivity();
-                mainActivity.showToScreen();
-            }
-        });
 
         IsInitialVoiceFinished = false;
 
@@ -150,6 +151,26 @@ public class SubjectFragment extends Fragment {
             }
         }
         super.onActivityResult(requestCode, resultCode, data);
+    }
+
+
+    @Override
+    public void onStop()
+    {
+        super.onStop();
+
+        if(tts != null){
+            tts.shutdown();
+        }
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+
+        if(tts != null){
+            tts.shutdown();
+        }
     }
 }
 

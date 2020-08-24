@@ -45,12 +45,13 @@
             android:paddingLeft="10dp" />
     </com.google.android.material.textfield.TextInputLayout>
 
+
     <ImageView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="164dp"
+        android:layout_marginBottom="100dp"
         android:src="@drawable/ic_baseline_mic_24"
-        app:layout_constraintBottom_toTopOf="@+id/scrollView2"
+        app:layout_constraintBottom_toTopOf="@+id/nextButtonTo"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
@@ -58,23 +59,12 @@
         app:layout_constraintVertical_bias="1.0">
     </ImageView>
 
-    <ScrollView
-        android:id="@+id/scrollView2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="16dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.975"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editText"
-        app:layout_constraintVertical_bias="1.0">
-
-        <Button
+    <Button
             android:id="@+id/nextButtonTo"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="match_parent"
+            android:layout_height="110dp"
             android:text="NEXT"
+            android:backgroundTint="@color/colorWhite"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.95"
@@ -82,7 +72,6 @@
             app:layout_constraintTop_toBottomOf="@+id/editText"
             app:layout_constraintVertical_bias="0.959" />
 
-    </ScrollView>
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
