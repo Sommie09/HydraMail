@@ -10,12 +10,10 @@ public class Mails {
     public static final String COLUMN_MESSAGE = "message";
     public static final String COLUMN_TIMESTAMP = "timestamp";
 
-
-    private int id;
-    private String recipient;
-    private String subject;
-    private String message;
-    private String timestamp;
+    public String recipient;
+    public String subject;
+    public String message;
+    public String timestamp;
 
 
     // Create table SQL query
@@ -28,23 +26,13 @@ public class Mails {
                     + COLUMN_TIMESTAMP + " DATETIME DEFAULT CURRENT_TIMESTAMP"
                     + ")";
 
-    public Mails() {
-    }
+    public Mails() { }
 
-    public Mails(int id, String recipient, String subject, String message, String timestamp) {
-        this.id = id;
+    public Mails(String recipient, String subject, String message, String timestamp) {
         this.recipient = recipient;
         this.subject = subject;
         this.message = message;
         this.timestamp = timestamp;
-    }
-
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
     }
 
     public String getRecipient() {

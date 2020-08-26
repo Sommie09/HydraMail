@@ -6,17 +6,30 @@
     android:layout_height="match_parent"
     tools:context=".sentmails.view.SentMailsActivity">
 
+    <include
+        android:id="@+id/tool_bar"
+        layout="@layout/toolbar"></include>
 
-
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:backgroundTint="@color/colorBlack"
-        style="@style/AddFab"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="16dp"
-        android:layout_marginBottom="16dp"
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/mail_recycler_view"
+        android:layout_width="409dp"
+        android:layout_height="673dp"
+        tools:listitem="@layout/mail_item_view"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" >
-    </com.google.android.material.floatingactionbutton.FloatingActionButton>
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tool_bar" />
+
+
+    <!--    <com.google.android.material.floatingactionbutton.FloatingActionButton-->
+<!--        android:backgroundTint="@color/colorBlack"-->
+<!--        style="@style/AddFab"-->
+<!--        android:layout_width="wrap_content"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:layout_marginEnd="16dp"-->
+<!--        android:layout_marginBottom="16dp"-->
+<!--        app:layout_constraintBottom_toBottomOf="parent"-->
+<!--        app:layout_constraintEnd_toEndOf="parent" >-->
+<!--    </com.google.android.material.floatingactionbutton.FloatingActionButton>-->
 
 </androidx.constraintlayout.widget.ConstraintLayout>

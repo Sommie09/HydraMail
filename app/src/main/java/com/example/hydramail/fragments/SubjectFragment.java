@@ -59,6 +59,8 @@ public class SubjectFragment extends Fragment {
         subjectEditText = view.findViewById(R.id.subject_edit_text);
         screenClick = view.findViewById(R.id.subject_fragment_screen);
 
+
+
         View.OnTouchListener otl = new View.OnTouchListener() {
             public boolean onTouch (View v, MotionEvent event) {
                 return true; // the listener has consumed the event

@@ -1,8 +1,12 @@
 package com.example.hydramail.fragments;
 
+import android.app.Activity;
+import android.content.Context;
+import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
@@ -18,7 +22,13 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.hydramail.R;
+import com.example.hydramail.sentmails.database.model.DatabaseHelper;
+import com.example.hydramail.sentmails.database.model.Mails;
+import com.example.hydramail.sentmails.view.MailAdapter;
+import com.example.hydramail.sentmails.view.SentMailsActivity;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Locale;
 
 import co.nedim.maildroidx.MaildroidX;
@@ -27,6 +37,10 @@ import co.nedim.maildroidx.MaildroidXType;
 public class ConfirmFragment extends Fragment {
     private TextToSpeech tts;
     private boolean IsInitialVoiceFinished;
+    private List<Mails> mailList = new ArrayList<>();
+    private MailAdapter mailAdapter;
+    private Context mContext;
+    DatabaseHelper dbHelper;
 
 
     public ConfirmFragment() {
@@ -39,6 +53,7 @@ public class ConfirmFragment extends Fragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_confirm, container, false);
 
+
         Bundle bundle = getArguments();
 
         final String recipient = bundle.getString("Recipient");
@@ -50,6 +65,7 @@ public class ConfirmFragment extends Fragment {
         TextView messageTextView = view.findViewById(R.id.message_text_view);
         Button sendButton = view.findViewById(R.id.sendButton);
 
+
         toTextView.setText(recipient);
         subjectTextView.setText(subject);
         messageTextView.setText(message);
@@ -57,15 +73,24 @@ public class ConfirmFragment extends Fragment {
         sendButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                sendMail(recipient, message, subject);
+                //sendMail(recipient, message, subject);
+                dbHelper = new DatabaseHelper(getActivity());
+                dbHelper.addBook(recipient, message, subject, getContext());
 
-                FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
-                FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+                Intent i = new Intent(getActivity(), SentMailsActivity.class);
+                startActivity(i);
+                ((Activity) getActivity()).overridePendingTransition(0, 0);
 
-                SuccessFragment successFragment = new SuccessFragment();
 
-                fragmentTransaction.replace(R.id.fragment_container, successFragment);
-                fragmentTransaction.commit();
+
+//                FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
+//                FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+//
+//                SuccessFragment successFragment = new SuccessFragment();
+//
+//                fragmentTransaction.replace(R.id.fragment_container, successFragment);
+//                fragmentTransaction.commit();
+
             }
         });
 
@@ -96,6 +121,9 @@ public class ConfirmFragment extends Fragment {
         return view;
 
     }
+
+
+
 
     private void speak(String text){
 
@@ -157,5 +185,11 @@ public class ConfirmFragment extends Fragment {
         }
     }
 
-
+    @Override
+    public void onAttach(@NonNull Context context) {
+        super.onAttach(context);
+        this.mContext = context;
+         dbHelper =  new DatabaseHelper(context);
+    }
 }
+

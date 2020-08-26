@@ -12,7 +12,10 @@
         android:roundIcon="@mipmap/ic_launcher_hydra"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".sentmails.view.SentMailsActivity"></activity>
+        <activity android:name=".sentmails.view.SentMailsActivity"
+            android:theme="@style/SentMailActivity"
+            >
+        </activity>
         <activity android:name=".ChooseAccount"></activity>
         <activity
             android:name=".SplashScreen"

@@ -56,6 +56,8 @@ public class ToFragment extends Fragment {
         nextButton = view.findViewById(R.id.nextButtonTo);
         toEditText = view.findViewById(R.id.to_edit_text);
 
+
+
         View.OnTouchListener otl = new View.OnTouchListener() {
             public boolean onTouch (View v, MotionEvent event) {
                 return true; // the listener has consumed the event

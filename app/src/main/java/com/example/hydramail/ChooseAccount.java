@@ -11,6 +11,8 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 
+import com.example.hydramail.sentmails.view.SentMailsActivity;
+
 import java.util.Locale;
 
 public class ChooseAccount extends AppCompatActivity {
@@ -27,7 +29,7 @@ public class ChooseAccount extends AppCompatActivity {
         chooseAccount.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(ChooseAccount.this, MainActivity.class);
+                Intent intent = new Intent(ChooseAccount.this, SentMailsActivity.class);
                 startActivity(intent);
             }
         });

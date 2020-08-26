@@ -5,11 +5,13 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class DatabaseHelper extends SQLiteOpenHelper {
+    public Context context;
 
     // Database Version
     private static final int DATABASE_VERSION = 1;
@@ -41,101 +43,49 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         onCreate(db);
     }
 
-    public long insertMail(String note) {
-        // get writable database as we want to write data
+    public void addBook(String recipient, String subject, String message, Context context){
         SQLiteDatabase db = this.getWritableDatabase();
 
-        ContentValues values = new ContentValues();
-        // `id` and `timestamp` will be inserted automatically.
-        // no need to add them
-        values.put(Mails.COLUMN_MESSAGE, note);
+        ContentValues cv = new ContentValues();
 
-        // insert row
-        long id = db.insert(Mails.TABLE_NAME, null, values);
+        cv.put(Mails.COLUMN_RECIPIENT, recipient);
+        cv.put(Mails.COLUMN_SUBJECT, subject);
+        cv.put(Mails.COLUMN_MESSAGE, message);
 
-        // close db connection
-        db.close();
+        long result =  db.insert(Mails.TABLE_NAME, null, cv);
 
-        // return newly inserted row id
-        return id;
-    }
-
-    public Mails getMail(long id) {
-        // get readable database as we are not inserting anything
-        SQLiteDatabase db = this.getReadableDatabase();
-
-        Cursor cursor = db.query(Mails.TABLE_NAME,
-                new String[]{Mails.COLUMN_ID, Mails.COLUMN_RECIPIENT, Mails.COLUMN_SUBJECT, Mails.COLUMN_MESSAGE, Mails.COLUMN_TIMESTAMP},
-                Mails.COLUMN_ID + "=?",
-                new String[]{String.valueOf(id)}, null, null, null, null);
-
-        if (cursor != null)
-            cursor.moveToFirst();
-
-        // prepare note object
-        Mails note = new Mails(
-                cursor.getInt(cursor.getColumnIndex(Mails.COLUMN_ID)),
-                cursor.getString(cursor.getColumnIndex(Mails.COLUMN_RECIPIENT)),
-                cursor.getString(cursor.getColumnIndex(Mails.COLUMN_SUBJECT)),
-                cursor.getString(cursor.getColumnIndex(Mails.COLUMN_MESSAGE)),
-                cursor.getString(cursor.getColumnIndex(Mails.COLUMN_TIMESTAMP)));
-
-        // close the db connection
-        cursor.close();
-
-        return note;
-    }
-
-    public List<Mails> getAllMails() {
-        List<Mails> mails = new ArrayList<>();
-
-        // Select All Query
-        String selectQuery = "SELECT  * FROM " + Mails.TABLE_NAME + " ORDER BY " +
-                Mails.COLUMN_TIMESTAMP + " DESC";
-
-        SQLiteDatabase db = this.getWritableDatabase();
-        Cursor cursor = db.rawQuery(selectQuery, null);
-
-        // looping through all rows and adding to list
-        if (cursor.moveToFirst()) {
-            do {
-                Mails mail = new Mails();
-                mail.setId(cursor.getInt(cursor.getColumnIndex(Mails.COLUMN_ID)));
-                mail.setRecipient(cursor.getString(cursor.getColumnIndex(Mails.COLUMN_RECIPIENT)));
-                mail.setSubject(cursor.getString(cursor.getColumnIndex(Mails.COLUMN_SUBJECT)));
-                mail.setMessage(cursor.getString(cursor.getColumnIndex(Mails.COLUMN_MESSAGE)));
-                mail.setTimestamp(cursor.getString(cursor.getColumnIndex(Mails.COLUMN_TIMESTAMP)));
-
-                mails.add(mail);
-            } while (cursor.moveToNext());
+        if(result == -1){
+            Toast.makeText(context, "Failed", Toast.LENGTH_SHORT).show();
+        }else{
+            Toast.makeText(context, "Added Successfully", Toast.LENGTH_SHORT).show();
         }
-
-        // close db connection
-        db.close();
-
-        // return notes list
-        return mails;
     }
 
-    public int getMailCount() {
-        String countQuery = "SELECT  * FROM " + Mails.TABLE_NAME;
-        SQLiteDatabase db = this.getReadableDatabase();
-        Cursor cursor = db.rawQuery(countQuery, null);
-
-        int count = cursor.getCount();
-        cursor.close();
-
-
-        // return count
-        return count;
-    }
-
-    public void deleteMails(Mails mail) {
+    public void deleteOneRow(String row_id, Context context){
         SQLiteDatabase db = this.getWritableDatabase();
-        db.delete(Mails.TABLE_NAME, Mails.COLUMN_ID + " = ?",
-                new String[]{String.valueOf(mail.getId())});
-        db.close();
+        long result = db.delete(Mails.TABLE_NAME, "id=?", new String[]{row_id});
+        if(result == -1){
+            Toast.makeText(context, "Failed", Toast.LENGTH_SHORT).show();
+        }else{
+            Toast.makeText(context, "Deleted", Toast.LENGTH_SHORT).show();
+        }
     }
+
+    public Cursor readAllData(){
+        String query = "SELECT * FROM " + Mails.TABLE_NAME;
+        SQLiteDatabase db = this.getReadableDatabase();
+
+        Cursor cursor = null;
+        if(db != null){
+            cursor= db.rawQuery(query, null);
+
+        }
+        return cursor;
+    }
+
+
+
+
 
 
 
