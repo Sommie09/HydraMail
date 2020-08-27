@@ -2,6 +2,7 @@
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/item_view_layout"
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
 
@@ -15,9 +16,9 @@
         app:contentPadding="16dp">
 
         <androidx.constraintlayout.widget.ConstraintLayout
-            android:padding="5dp"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:padding="5dp">
 
             <ImageView
                 android:id="@+id/imageView2"
@@ -30,7 +31,6 @@
                 app:layout_constraintTop_toTopOf="parent" />
 
             <TextView
-                android:textStyle="bold"
                 android:id="@+id/email_recipient"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -38,7 +38,21 @@
                 android:layout_marginTop="4dp"
                 android:fontFamily="@font/lato_regular"
                 android:text="Chisom Nwokwu"
+                android:textStyle="bold"
                 app:layout_constraintStart_toEndOf="@+id/imageView2"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/mail_id"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/lato_regular"
+                android:text="1"
+                android:visibility="invisible"
+                android:textStyle="bold"
+                app:layout_constraintBottom_toTopOf="@+id/email_subject"
+                app:layout_constraintEnd_toStartOf="@+id/email_date"
+                app:layout_constraintStart_toEndOf="@+id/email_recipient"
                 app:layout_constraintTop_toTopOf="parent" />
 
             <TextView
@@ -56,11 +70,11 @@
 
             <TextView
                 android:id="@+id/email_subject"
-                android:fontFamily="@font/lato_regular"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="10dp"
                 android:layout_marginTop="6dp"
+                android:fontFamily="@font/lato_regular"
                 android:text="JOB APPLICATION"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.0"

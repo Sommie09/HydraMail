@@ -19,7 +19,7 @@ public class Mails {
     // Create table SQL query
     public static final String CREATE_TABLE =
             "CREATE TABLE " + TABLE_NAME + "("
-                    + COLUMN_ID + " INTEGER PRIMARY KEY AUTOINCREMENT,"
+                    + COLUMN_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, "
                     + COLUMN_RECIPIENT + " TEXT,"
                     + COLUMN_SUBJECT + " TEXT,"
                     + COLUMN_MESSAGE + " TEXT,"

@@ -14,6 +14,9 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.hydramail.MainActivity;
@@ -28,12 +31,13 @@ import java.util.List;
 public class SentMailsActivity extends AppCompatActivity {
     private MailAdapter mailAdapter;
     private RecyclerView recyclerView;
+    private ImageView envelop_icon;
+    private TextView no_mails_text;
 
-    ArrayList<String> mail_recipient, mail_subject, mail_message, mail_timestamp;
+    ArrayList<String> mail_id, mail_recipient, mail_subject, mail_message, mail_timestamp;
 
     private DatabaseHelper databaseHelper;
     ItemTouchHelper.SimpleCallback itemTouchHelperCallBack;
-    String id;
 
 
     @Override
@@ -45,20 +49,22 @@ public class SentMailsActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
 
         recyclerView = findViewById(R.id.mail_recycler_view);
+        envelop_icon = findViewById(R.id.envelope_icon);
+        no_mails_text = findViewById(R.id.no_mails_text);
 
 
         databaseHelper = new DatabaseHelper(SentMailsActivity.this);
+        mail_id = new ArrayList<>();
         mail_recipient = new ArrayList<>();
         mail_subject = new ArrayList<>();
         mail_message = new ArrayList<>();
         mail_timestamp = new ArrayList<>();
 
-        id = Mails.COLUMN_ID;
 
 
         storeDataInArray();
 
-        mailAdapter = new MailAdapter(SentMailsActivity.this, mail_recipient, mail_subject, mail_message, mail_timestamp);
+        mailAdapter = new MailAdapter(SentMailsActivity.this, mail_id ,mail_recipient, mail_subject, mail_message, mail_timestamp);
         recyclerView.setAdapter(mailAdapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(SentMailsActivity.this));
 
@@ -70,12 +76,14 @@ public class SentMailsActivity extends AppCompatActivity {
 //
 //            @Override
 //            public void onSwiped(@NonNull RecyclerView.ViewHolder viewHolder, int direction) {
+//
+//                DatabaseHelper databaseHelper = new DatabaseHelper(SentMailsActivity.this);
+//                databaseHelper.deleteOneRow(Mails.COLUMN_ID, SentMailsActivity.this);
+//
 //                    int position = viewHolder.getAdapterPosition();
-//                    mail_subject.remove(position);
+//                    mail_message.remove(position);
 //                    mailAdapter.notifyDataSetChanged();
 //
-//                    DatabaseHelper databaseHelper = new DatabaseHelper(SentMailsActivity.this);
-//                    databaseHelper.deleteOneRow(id, SentMailsActivity.this);
 //            }
 //        };
 //
@@ -89,9 +97,14 @@ public class SentMailsActivity extends AppCompatActivity {
     void storeDataInArray(){
         Cursor cursor = databaseHelper.readAllData();
         if(cursor.getCount() == 0){
+            recyclerView.setVisibility(View.INVISIBLE);
+            envelop_icon.setVisibility(View.VISIBLE);
+            no_mails_text.setVisibility(View.VISIBLE);
+
             Toast.makeText(this, "No Data", Toast.LENGTH_SHORT).show();
         }else{
             while(cursor.moveToNext()){
+                mail_id.add(cursor.getString(0));
                 mail_recipient.add(cursor.getString(1));
                 mail_subject.add(cursor.getString(2));
                 mail_message.add(cursor.getString(3));
