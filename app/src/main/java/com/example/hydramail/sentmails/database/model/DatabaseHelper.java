@@ -19,31 +19,48 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     // Database Name
     private static final String DATABASE_NAME = "mails_db";
 
+    //Table Name
+    private static final String TABLE_NAME = "mails";
 
-    public DatabaseHelper(Context context) {
+    private static final String COLUMN_ID = "_id";
+    private static final String COLUMN_RECIPIENT = "recipient";
+    private static final String COLUMN_SUBJECT = "subject";
+    private static final String COLUMN_MESSAGE = "message";
+    private static final String COLUMN_TIMESTAMP = "timestamp";
+
+
+     public DatabaseHelper(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
+        this.context = context;
     }
 
 
     // Creating Tables
     @Override
     public void onCreate(SQLiteDatabase db) {
+        String query =
+                "CREATE TABLE " + TABLE_NAME +
+                        " (" + COLUMN_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, "
+                        + COLUMN_RECIPIENT + " TEXT, "
+                        + COLUMN_SUBJECT + " TEXT, "
+                        + COLUMN_MESSAGE + " TEXT, "
+                        + COLUMN_TIMESTAMP + " DATETIME DEFAULT CURRENT_TIMESTAMP);";
 
         // create notes table
-        db.execSQL(Mails.CREATE_TABLE);
+        db.execSQL(query);
     }
 
     // Upgrading database
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
         // Drop older table if existed
-        db.execSQL("DROP TABLE IF EXISTS " + Mails.TABLE_NAME);
+        db.execSQL("DROP TABLE IF EXISTS " + TABLE_NAME );
 
         // Create tables again
         onCreate(db);
     }
 
-    public void addBook(String recipient, String subject, String message, Context context){
+    public void addBook(String recipient, String subject, String message, Context context) {
         SQLiteDatabase db = this.getWritableDatabase();
 
         ContentValues cv = new ContentValues();
@@ -52,7 +69,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         cv.put(Mails.COLUMN_SUBJECT, subject);
         cv.put(Mails.COLUMN_MESSAGE, message);
 
-        long result =  db.insert(Mails.TABLE_NAME, null, cv);
+        long result =  db.insert(TABLE_NAME, null, cv);
 
         if(result == -1){
             Toast.makeText(context, "Failed", Toast.LENGTH_SHORT).show();
@@ -67,12 +84,17 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         if(result == -1){
             Toast.makeText(context, "Failed", Toast.LENGTH_SHORT).show();
         }else{
-            Toast.makeText(context, "Deleted", Toast.LENGTH_SHORT).show();
+            Toast.makeText(context, "Successfully Deleted", Toast.LENGTH_SHORT).show();
         }
     }
 
+    public void deleteAllData(){
+         SQLiteDatabase db = this.getWritableDatabase();
+         db.execSQL("DELETE FROM "+TABLE_NAME);
+    }
+
     public Cursor readAllData(){
-        String query = "SELECT * FROM " + Mails.TABLE_NAME;
+        String query = "SELECT * FROM " + TABLE_NAME;
         SQLiteDatabase db = this.getReadableDatabase();
 
         Cursor cursor = null;

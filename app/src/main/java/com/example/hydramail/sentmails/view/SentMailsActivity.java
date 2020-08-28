@@ -15,6 +15,7 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -35,9 +36,9 @@ public class SentMailsActivity extends AppCompatActivity {
     private TextView no_mails_text;
 
     ArrayList<String> mail_id, mail_recipient, mail_subject, mail_message, mail_timestamp;
-
     private DatabaseHelper databaseHelper;
-    ItemTouchHelper.SimpleCallback itemTouchHelperCallBack;
+
+     ItemTouchHelper.SimpleCallback itemTouchHelperCallBack;
 
 
     @Override
@@ -60,36 +61,45 @@ public class SentMailsActivity extends AppCompatActivity {
         mail_message = new ArrayList<>();
         mail_timestamp = new ArrayList<>();
 
-
-
         storeDataInArray();
 
         mailAdapter = new MailAdapter(SentMailsActivity.this, mail_id ,mail_recipient, mail_subject, mail_message, mail_timestamp);
         recyclerView.setAdapter(mailAdapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(SentMailsActivity.this));
 
-//        itemTouchHelperCallBack  = new ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.RIGHT) {
-//            @Override
-//            public boolean onMove(@NonNull RecyclerView recyclerView, @NonNull RecyclerView.ViewHolder viewHolder, @NonNull RecyclerView.ViewHolder target) {
-//                return false;
-//            }
-//
-//            @Override
-//            public void onSwiped(@NonNull RecyclerView.ViewHolder viewHolder, int direction) {
-//
-//                DatabaseHelper databaseHelper = new DatabaseHelper(SentMailsActivity.this);
-//                databaseHelper.deleteOneRow(Mails.COLUMN_ID, SentMailsActivity.this);
-//
-//                    int position = viewHolder.getAdapterPosition();
-//                    mail_message.remove(position);
-//                    mailAdapter.notifyDataSetChanged();
-//
-//            }
-//        };
-//
-//        ItemTouchHelper itemTouchHelper = new ItemTouchHelper(itemTouchHelperCallBack);
-//        itemTouchHelper.attachToRecyclerView(recyclerView);
-        
+        itemTouchHelperCallBack  = new ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.RIGHT) {
+            @Override
+            public boolean onMove(@NonNull RecyclerView recyclerView, @NonNull RecyclerView.ViewHolder viewHolder, @NonNull RecyclerView.ViewHolder target) {
+                return false;
+            }
+
+            @Override
+            public void onSwiped(@NonNull RecyclerView.ViewHolder viewHolder, int direction) {
+
+                int position = viewHolder.getAdapterPosition();
+
+                DatabaseHelper databaseHelper = new DatabaseHelper(SentMailsActivity.this);
+                databaseHelper.deleteOneRow(String.valueOf(mail_id.get(position)), SentMailsActivity.this);
+
+                mail_id.remove(position);
+                mailAdapter.notifyDataSetChanged();
+
+                Cursor cursor = databaseHelper.readAllData();
+                if(cursor.getCount() == 0){
+                    recyclerView.setVisibility(View.INVISIBLE);
+                    envelop_icon.setVisibility(View.VISIBLE);
+                    no_mails_text.setVisibility(View.VISIBLE);
+
+                    Toast.makeText(SentMailsActivity.this, "No Data", Toast.LENGTH_SHORT).show();
+                }
+
+
+            }
+        };
+
+        ItemTouchHelper itemTouchHelper = new ItemTouchHelper(itemTouchHelperCallBack);
+        itemTouchHelper.attachToRecyclerView(recyclerView);
+
 
 
     }
@@ -129,7 +139,11 @@ public class SentMailsActivity extends AppCompatActivity {
                 Intent intent = new Intent(SentMailsActivity.this, MainActivity.class);
                 startActivity(intent);
                 return true;
-            default:
+            case R.id.delete_all:
+                DatabaseHelper databaseHelper = new DatabaseHelper(SentMailsActivity.this);
+                databaseHelper.deleteAllData();
+
+                default:
                 return super.onOptionsItemSelected(item);
         }
     }

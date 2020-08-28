@@ -24,15 +24,14 @@ public class MailAdapter extends RecyclerView.Adapter<MailAdapter.MyViewHolder> 
 
     private Context context;
     private ArrayList<String> mail_id, mail_recipient, mail_subject, mail_message, mail_timestamp;
+    int position;
 
     Animation translate_anim;
 
+    MailAdapter(){}
+
     public class MyViewHolder extends RecyclerView.ViewHolder {
-        public TextView id;
-        public TextView recipient;
-        public TextView subject;
-        public TextView message;
-        public TextView timestamp;
+        public TextView id,recipient,subject,message,timestamp;
         public FrameLayout mail_layout;
 
         public MyViewHolder(View view) {
@@ -70,6 +69,7 @@ public class MailAdapter extends RecyclerView.Adapter<MailAdapter.MyViewHolder> 
 
     @Override
     public void onBindViewHolder(MyViewHolder holder, int position) {
+        this.position = position;
         holder.id.setText(String.valueOf(mail_id.get(position)));
         holder.recipient.setText(String.valueOf(mail_recipient.get(position)));
         holder.subject.setText(String.valueOf(mail_subject.get(position)));

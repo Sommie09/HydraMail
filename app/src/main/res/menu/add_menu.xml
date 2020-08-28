@@ -7,4 +7,11 @@
         android:title="Add mail"
         android:icon="@drawable/ic_baseline_add_24">
     </item>
+
+    <item
+        app:showAsAction="always"
+        android:id="@+id/delete_all"
+        android:title="Delete All"
+        android:icon="@drawable/ic_baseline_delete_sweep_24">
+    </item>
 </menu>

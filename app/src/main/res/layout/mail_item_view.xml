@@ -48,7 +48,6 @@
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/lato_regular"
                 android:text="1"
-                android:visibility="invisible"
                 android:textStyle="bold"
                 app:layout_constraintBottom_toTopOf="@+id/email_subject"
                 app:layout_constraintEnd_toStartOf="@+id/email_date"
