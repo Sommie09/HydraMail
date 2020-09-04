@@ -140,8 +140,15 @@ public class SentMailsActivity extends AppCompatActivity {
                 startActivity(intent);
                 return true;
             case R.id.delete_all:
-                DatabaseHelper databaseHelper = new DatabaseHelper(SentMailsActivity.this);
-                databaseHelper.deleteAllData();
+                Cursor cursor = databaseHelper.readAllData();
+                if(cursor.getCount() == 0){
+                    Toast.makeText(this, "No Data to delete", Toast.LENGTH_SHORT).show();
+                }else{
+                    DatabaseHelper databaseHelper = new DatabaseHelper(SentMailsActivity.this);
+                    databaseHelper.deleteAllData();
+                }
+
+
 
                 default:
                 return super.onOptionsItemSelected(item);
