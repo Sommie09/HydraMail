@@ -31,8 +31,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
-import co.nedim.maildroidx.MaildroidX;
-import co.nedim.maildroidx.MaildroidXType;
 
 public class ConfirmFragment extends Fragment {
     private TextToSpeech tts;
@@ -134,36 +132,7 @@ public class ConfirmFragment extends Fragment {
         }
     }
 
-    public void sendMail(String recipient, String message, String subject){
-        new MaildroidX.Builder()
-                .smtp("smtp.mailtrap.io")
-                .smtpUsername("be2d320594386f")
-                .smtpPassword("10ec68a869121f")
-                .port("2525")
-                .type(MaildroidXType.HTML)
-                .to(recipient)
-                .from("chisomnwokwu09@gmail.com")
-                .subject(subject)
-                .body(message)
-                .isJavascriptDisabled(true)
-                .onCompleteCallback(new MaildroidX.onCompleteCallback() {
-                    @Override
-                    public void onSuccess() {
-                    }
 
-                    @Override
-                    public void onFail(String s) {
-                        Toast.makeText(getActivity(), "Failed!", Toast.LENGTH_SHORT).show();
-                    }
-
-                    @Override
-                    public long getTimeout() {
-                        return 0;
-                    }
-                })
-
-            .mail();
-    }
 
 
     @Override

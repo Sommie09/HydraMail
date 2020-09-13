@@ -55,23 +55,22 @@
         app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/text_input_subject"
-        app:layout_constraintVertical_bias="1.0">
-    </ImageView>
+        app:layout_constraintVertical_bias="0.783"></ImageView>
 
-
-    <Button
+    <com.google.android.material.button.MaterialButton
         android:id="@+id/nextButtonSubject"
         android:layout_width="match_parent"
         android:layout_height="110dp"
         android:text="NEXT"
-        android:backgroundTint="@color/colorWhite"
+        app:cornerRadius="20dp"
+        android:layout_margin="5dp"
+        android:backgroundTint="@color/colorBlack"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.95"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/editText"
         app:layout_constraintVertical_bias="0.959" />
-
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

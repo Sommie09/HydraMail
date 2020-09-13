@@ -39,7 +39,6 @@
     </com.google.android.material.textfield.TextInputLayout>
 
 
-
     <ImageView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -49,15 +48,16 @@
         app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/text_input_message"
-        app:layout_constraintVertical_bias="0.482">
-    </ImageView>
+        app:layout_constraintVertical_bias="0.432"></ImageView>
 
-
-    <Button
+    <com.google.android.material.button.MaterialButton
         android:id="@+id/finishButtonMessage"
         android:layout_width="match_parent"
-        android:layout_height="100dp"
-        android:backgroundTint="@color/colorWhite"
+        android:layout_height="110dp"
+        android:text="FINISH"
+        app:cornerRadius="20dp"
+        android:layout_margin="5dp"
+        android:backgroundTint="@color/colorBlack"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.95"

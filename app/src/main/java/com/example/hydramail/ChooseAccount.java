@@ -45,7 +45,7 @@ public class ChooseAccount extends AppCompatActivity {
                     if (result == TextToSpeech.LANG_MISSING_DATA || result == TextToSpeech.LANG_NOT_SUPPORTED) {
                         Log.e("TTS", "This Language is not supported");
                     }
-//                    speak("Please choose a mail account now");
+                  speak("Please choose a mail account now");
                     new Handler().postDelayed(new Runnable() {
                         @Override
                         public void run() {
@@ -59,7 +59,14 @@ public class ChooseAccount extends AppCompatActivity {
         });
     }
 
-    //put speak back
+    private void speak(String text){
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            tts.speak(text, TextToSpeech.QUEUE_FLUSH, null, null);
+        }else{
+            tts.speak(text, TextToSpeech.QUEUE_FLUSH, null);
+        }
+    }
 
 
 }
