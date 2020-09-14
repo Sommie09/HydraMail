@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
@@ -78,17 +78,16 @@
         android:text="I would want to apply for a job at your company, this would give me the chance to be able to work very well unlike in my other company"
         />
 
-    <Button
+    <com.google.android.material.button.MaterialButton
         android:id="@+id/sendButton"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:backgroundTint="@color/colorWhite"
-        android:text="@string/send_button_text"
-        android:layout_marginTop="50dp"
-        android:layout_gravity="center"
-        android:textColor="#FFFFFF"
-        />
-
+        android:layout_height="110dp"
+        android:layout_marginTop="170dp"
+        android:layout_marginLeft="5dp"
+        android:layout_marginRight="5dp"
+        android:backgroundTint="@color/colorBlack"
+        android:text="SEND"
+        app:cornerRadius="20dp" />
 
 
 </LinearLayout>

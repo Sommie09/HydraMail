@@ -12,7 +12,6 @@
         android:layout_height="214dp"
         android:layout_marginTop="156dp"
         android:layout_marginBottom="313dp"
-        app:layout_constraintBottom_toTopOf="@+id/sendButton"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.43"
         app:layout_constraintStart_toStartOf="parent"

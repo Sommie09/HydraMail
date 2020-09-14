@@ -1,66 +1,180 @@
 package com.example.hydramail.fragments;
 
+import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
-
-import androidx.fragment.app.Fragment;
-
+import android.os.Handler;
+import android.speech.RecognizerIntent;
+import android.speech.tts.TextToSpeech;
+import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 
+import androidx.annotation.Nullable;
+import androidx.constraintlayout.widget.ConstraintLayout;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
+
+import com.example.hydramail.MainActivity;
 import com.example.hydramail.R;
+import com.google.android.material.textfield.TextInputEditText;
+
+import java.util.ArrayList;
+import java.util.Locale;
+
+import static android.app.Activity.RESULT_OK;
+
 
 /**
  * A simple {@link Fragment} subclass.
- * Use the {@link PasswordFragment#newInstance} factory method to
- * create an instance of this fragment.
  */
 public class PasswordFragment extends Fragment {
+    private Button nextButton;
+    private TextToSpeech tts;
+    private boolean IsInitialVoiceFinished;
+    private ConstraintLayout screenClick;
+    TextInputEditText passwordEditText;
 
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
-
-    // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
+    private static final int RECOGNIZER_RESULT = 1;
 
     public PasswordFragment() {
         // Required empty public constructor
     }
 
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment PasswordFragment.
-     */
-    // TODO: Rename and change types and number of parameters
-    public static PasswordFragment newInstance(String param1, String param2) {
-        PasswordFragment fragment = new PasswordFragment();
-        Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
-        fragment.setArguments(args);
-        return fragment;
-    }
-
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
-        }
-    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_password, container, false);
+        View view = inflater.inflate(R.layout.fragment_password, container, false);
+
+
+        nextButton = view.findViewById(R.id.nextButtonPassword);
+        passwordEditText = view.findViewById(R.id.password_edit_text);
+        screenClick = view.findViewById(R.id.password_fragment_screen);
+
+
+
+        View.OnTouchListener otl = new View.OnTouchListener() {
+            public boolean onTouch (View v, MotionEvent event) {
+                return true; // the listener has consumed the event
+            }
+        };
+
+        passwordEditText.setOnTouchListener(otl);
+
+        screenClick.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent speechIntent = new Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH);
+                speechIntent.putExtra(RecognizerIntent.EXTRA_LANGUAGE_MODEL, RecognizerIntent.LANGUAGE_MODEL_FREE_FORM);
+                speechIntent.putExtra(RecognizerIntent.EXTRA_PROMPT, "Speech to Text");
+                startActivityForResult(speechIntent, 1);
+            }
+        });
+
+        nextButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Bundle bundle = requireArguments();
+
+                String password = passwordEditText.getText().toString();
+                String email = bundle.getString("Email");
+
+                bundle.putString("Email", email);
+                bundle.putString("Password", password);
+
+                FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
+                FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+
+                ToFragment toFragment = new ToFragment();
+                toFragment.setArguments(bundle);
+
+                fragmentTransaction.replace(R.id.fragment_container, toFragment);
+                fragmentTransaction.commit();
+            }
+        });
+
+
+        IsInitialVoiceFinished = false;
+
+        tts = new TextToSpeech(getContext(), new TextToSpeech.OnInitListener() {
+            @Override
+            public void onInit(int status) {
+                if (status == TextToSpeech.SUCCESS) {
+                    int result = tts.setLanguage(Locale.ENGLISH);
+                    if (result == TextToSpeech.LANG_MISSING_DATA || result == TextToSpeech.LANG_NOT_SUPPORTED) {
+                        Log.e("TTS", "This Language is not supported");
+                    }
+                    speak("Tap on your screen, Please spell out password carefully. \n Sample \n\n a \n\n b\n\n c\n\n d\n\n 1\n\n 2\n\n 3\n\n\n\n abc123 \n Tap in 3 \n\n 2 \n\n 1");
+                    new Handler().postDelayed(new Runnable() {
+                        @Override
+                        public void run() {
+                            IsInitialVoiceFinished=true;
+                        }
+                    }, 1000);
+                } else {
+                    Log.e("TTS", "Initilization Failed!");
+                }
+            }
+        });
+
+
+        return view;
+    }
+
+
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+
+        if(requestCode == RECOGNIZER_RESULT && resultCode == RESULT_OK){
+            ArrayList<String> matches = data.getStringArrayListExtra(RecognizerIntent.EXTRA_RESULTS);
+            String rawInput = matches.get(0);
+            String spaces = rawInput.replaceAll("\\s", "");
+            passwordEditText.setText(spaces);
+
+            if(passwordEditText.getText().toString().isEmpty()) {
+                speak("Please enter password");
+            }else{
+                speak("Valid, Please confirm password \n "+ passwordEditText.getText()+ "\n \n \nTap below screen to continue");
+
+            }
+        }
+        super.onActivityResult(requestCode, resultCode, data);
+    }
+
+    private void speak(String text){
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            tts.speak(text, TextToSpeech.QUEUE_FLUSH, null, null);
+        }else{
+            tts.speak(text, TextToSpeech.QUEUE_FLUSH, null);
+        }
+    }
+
+
+    @Override
+    public void onStop()
+    {
+        super.onStop();
+
+        if(tts != null){
+            tts.shutdown();
+        }
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+
+        if(tts != null){
+            tts.shutdown();
+        }
     }
 }
+

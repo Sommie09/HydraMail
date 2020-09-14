@@ -54,9 +54,13 @@ public class ConfirmFragment extends Fragment {
 
         Bundle bundle = getArguments();
 
+        final String email = bundle.getString("Email");
+        final String password = bundle.getString("Password");
+
         final String recipient = bundle.getString("Recipient");
         final String subject = bundle.getString("Subject");
         final String message = bundle.getString("Message");
+
 
         TextView toTextView = view.findViewById(R.id.to_text_view);
         TextView subjectTextView = view.findViewById(R.id.subject_text_view);
@@ -64,8 +68,8 @@ public class ConfirmFragment extends Fragment {
         Button sendButton = view.findViewById(R.id.sendButton);
 
 
-        toTextView.setText(recipient);
-        subjectTextView.setText(subject);
+        toTextView.setText(email);
+        subjectTextView.setText(password);
         messageTextView.setText(message);
 
         sendButton.setOnClickListener(new View.OnClickListener() {
@@ -102,7 +106,7 @@ public class ConfirmFragment extends Fragment {
                     if (result == TextToSpeech.LANG_MISSING_DATA || result == TextToSpeech.LANG_NOT_SUPPORTED) {
                         Log.e("TTS", "This Language is not supported");
                     }
-                   speak("Please confirm message, you are sending to\n\n\n\n"+ recipient+ "\n\n\n\nyour subject is \n\n\n\n"+subject+ "\n\n\n\n\nYour message is\n\n\n\n "+message+ "\n\n\n\nTap on your screen to send");
+                   speak("Please confirm message, you are sending to\n\n\n\n"+ recipient+ "\n\n\n\nyour subject is \n\n\n\n"+subject+ "\n\n\n\n\nYour message is\n\n\n\n "+message+ "\n\n\n\nTap below screen to send");
                     new Handler().postDelayed(new Runnable() {
                         @Override
                         public void run() {

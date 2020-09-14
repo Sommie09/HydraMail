@@ -79,10 +79,17 @@ public class ToFragment extends Fragment {
         nextButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String recipient = toEditText.getText().toString();
+                Bundle bundle = requireArguments();
 
-                Bundle bundle = new Bundle();
+                String recipient = toEditText.getText().toString();
+                String email = bundle.getString("Email");
+                String password = bundle.getString("Password");
+
+
                 bundle.putString("Recipient", recipient);
+                bundle.putString("Email", email);
+                bundle.putString("Password", password);
+
 
                 FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
                 FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
@@ -149,12 +156,13 @@ public class ToFragment extends Fragment {
             if(toEditText.getText().toString().isEmpty()) {
                 speak("Please enter email address");
             }else {
-                if (toEditText.getText().toString().trim().matches(emailPattern)) {
-                    speak("Valid Email, Please confirm message \n "+ toEditText.getText()+ "\n \n \nTap below screen to continue");
-                } else {
-                    speak("Invalid Email, Please tap screen again");
+                    if (toEditText.getText().toString().trim().matches(emailPattern)) {
+                        speak("Valid Email, Please confirm message \n " + toEditText.getText() + "\n \n \nTap below screen to continue");
+                    } else {
+                        speak("Invalid Email, Please tap screen again");
+                    }
                 }
-            }
+
         }
         super.onActivityResult(requestCode, resultCode, data);
     }

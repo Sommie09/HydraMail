@@ -84,10 +84,15 @@ public class MessageFragment extends Fragment {
                 String message = messageEditText.getText().toString();
                 String recipient = bundle.getString("Recipient");
                 String subject = bundle.getString("Subject");
+                String email = bundle.getString("Email");
+                String password = bundle.getString("Password");
 
                 bundle.putString("Message", message);
                 bundle.putString("Recipient", recipient);
                 bundle.putString("Subject", subject);
+                bundle.putString("Email",email );
+                bundle.putString("Password", password);
+
 
                 FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
                 FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();

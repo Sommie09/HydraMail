@@ -7,6 +7,7 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 
 import com.example.hydramail.R;
+import com.example.hydramail.fragments.EmailFragment;
 import com.example.hydramail.fragments.SubjectFragment;
 import com.example.hydramail.fragments.ToFragment;
 
@@ -21,25 +22,11 @@ public class MainActivity extends AppCompatActivity{
         Fragment fragment = manager.findFragmentById(R.id.fragment_container);
 
         if(fragment == null){
-            fragment = new ToFragment();
+            fragment = new EmailFragment();
             manager.beginTransaction().add(R.id.fragment_container, fragment).commit();// Start the transaction
         }
     }
 
-
-    public void showSubjectScreen(){
-        SubjectFragment subjectFragment = new SubjectFragment();
-        this.getSupportFragmentManager()
-                .beginTransaction()
-                .replace(R.id.fragment_container, subjectFragment)
-                .addToBackStack(null)
-                .commit();
-    }
-
-    public void showToScreen(){
-        ToFragment toFragment = new ToFragment();
-        this.getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, toFragment).addToBackStack(null).commit();
-    }
 
 
 

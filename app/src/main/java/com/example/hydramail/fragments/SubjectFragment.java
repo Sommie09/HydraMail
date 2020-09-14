@@ -86,9 +86,14 @@ public class SubjectFragment extends Fragment {
 
                 String subject = subjectEditText.getText().toString();
                 String recipient = bundle.getString("Recipient");
+                String email = bundle.getString("Email");
+                String password = bundle.getString("Password");
+
 
                 bundle.putString("Subject", subject);
                 bundle.putString("Recipient", recipient);
+                bundle.putString("Email",email );
+                bundle.putString("Password", password);
 
                 FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
                 FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
