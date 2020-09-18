@@ -3,6 +3,7 @@ package com.example.hydramail.fragments;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
 
@@ -21,6 +22,7 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.hydramail.GmailSender;
 import com.example.hydramail.R;
 import com.example.hydramail.sentmails.database.model.DatabaseHelper;
 import com.example.hydramail.sentmails.database.model.Mails;
@@ -39,7 +41,11 @@ public class ConfirmFragment extends Fragment {
     private MailAdapter mailAdapter;
     private Context mContext;
     DatabaseHelper dbHelper;
-
+    private String email;
+    private String password;
+    private String recipient;
+    private String subject;
+    private String message;
 
     public ConfirmFragment() {
         // Required empty public constructor
@@ -54,12 +60,12 @@ public class ConfirmFragment extends Fragment {
 
         Bundle bundle = getArguments();
 
-        final String email = bundle.getString("Email");
-        final String password = bundle.getString("Password");
+        email = bundle.getString("Email");
+        password = bundle.getString("Password");
 
-        final String recipient = bundle.getString("Recipient");
-        final String subject = bundle.getString("Subject");
-        final String message = bundle.getString("Message");
+        recipient = bundle.getString("Recipient");
+        subject = bundle.getString("Subject");
+        message = bundle.getString("Message");
 
 
         TextView toTextView = view.findViewById(R.id.to_text_view);
@@ -68,14 +74,17 @@ public class ConfirmFragment extends Fragment {
         Button sendButton = view.findViewById(R.id.sendButton);
 
 
-        toTextView.setText(email);
-        subjectTextView.setText(password);
+        toTextView.setText(recipient);
+        subjectTextView.setText(subject);
         messageTextView.setText(message);
+
+        final SendEmailTask sendEmailTask = new SendEmailTask();
 
         sendButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //sendMail(recipient, message, subject);
+                sendEmailTask.execute();
+
                 dbHelper = new DatabaseHelper(getActivity());
                 dbHelper.addBook(recipient, message, subject, getContext());
 
@@ -84,14 +93,6 @@ public class ConfirmFragment extends Fragment {
                 ((Activity) getActivity()).overridePendingTransition(0, 0);
 
 
-
-//                FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
-//                FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-//
-//                SuccessFragment successFragment = new SuccessFragment();
-//
-//                fragmentTransaction.replace(R.id.fragment_container, successFragment);
-//                fragmentTransaction.commit();
 
             }
         });
@@ -136,9 +137,6 @@ public class ConfirmFragment extends Fragment {
         }
     }
 
-
-
-
     @Override
     public void onStop()
     {
@@ -163,6 +161,40 @@ public class ConfirmFragment extends Fragment {
         super.onAttach(context);
         this.mContext = context;
          dbHelper =  new DatabaseHelper(context);
+    }
+
+    class SendEmailTask extends AsyncTask<Void, Void, Void> {
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+            Log.i("Email sending", "sending start");
+        }
+
+        @Override
+        protected Void doInBackground(Void... params) {
+            try {
+                GmailSender sender = new GmailSender(email, password);
+                //subject, body, sender, to
+                sender.sendMail(subject,
+                        message,
+                        email,
+                        recipient);
+
+                Log.i("Email sending", "send");
+                speak("Email Sent!");
+                //Add alert dialog here
+            } catch (Exception e) {
+                Log.i("Email sending", "cannot send");
+                e.printStackTrace();
+            }
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(Void result) {
+            super.onPostExecute(result);
+        }
     }
 }
 
