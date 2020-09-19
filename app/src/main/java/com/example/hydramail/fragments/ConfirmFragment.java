@@ -182,7 +182,7 @@ public class ConfirmFragment extends Fragment {
                         recipient);
 
                 Log.i("Email sending", "send");
-                speak("Email Sent!");
+                
                 //Add alert dialog here
             } catch (Exception e) {
                 Log.i("Email sending", "cannot send");
