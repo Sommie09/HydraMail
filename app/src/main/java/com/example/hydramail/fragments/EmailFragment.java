@@ -78,19 +78,25 @@ public class EmailFragment extends Fragment {
         nextButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String email = emailEditText.getText().toString();
+                if(emailEditText.getText().toString().isEmpty()) {
+                    textToSpeech("Empty Input \n Please enter your email address");
+                }else{
+                    String email = emailEditText.getText().toString();
 
-                Bundle bundle = new Bundle();
-                bundle.putString("Email", email);
+                    Bundle bundle = new Bundle();
+                    bundle.putString("Email", email);
 
-                FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
-                FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+                    FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
+                    FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
 
-                PasswordFragment passwordFragment = new PasswordFragment();
-                passwordFragment.setArguments(bundle);
+                    PasswordFragment passwordFragment = new PasswordFragment();
+                    passwordFragment.setArguments(bundle);
 
-                fragmentTransaction.replace(R.id.fragment_container, passwordFragment);
-                fragmentTransaction.commit();
+                    fragmentTransaction.replace(R.id.fragment_container, passwordFragment);
+                    fragmentTransaction.commit();
+
+                }
+
 
 
             }
@@ -99,26 +105,7 @@ public class EmailFragment extends Fragment {
 
         IsInitialVoiceFinished = false;
 
-        tts = new TextToSpeech(getContext(), new TextToSpeech.OnInitListener() {
-            @Override
-            public void onInit(int status) {
-                if (status == TextToSpeech.SUCCESS) {
-                    int result = tts.setLanguage(Locale.ENGLISH);
-                    if (result == TextToSpeech.LANG_MISSING_DATA || result == TextToSpeech.LANG_NOT_SUPPORTED) {
-                        Log.e("TTS", "This Language is not supported");
-                    }
-                    speak("Tap on your screen, Please speak your email address, spell out email address carefully. \n Sample \n\n j \n\n o\n\n h\n\n n\n\n d\n\n o\n\n e\n\n at gmail.com \n\n johndoe@gmail.com. \n Tap in 3 \n\n 2 \n\n 1");
-                    new Handler().postDelayed(new Runnable() {
-                        @Override
-                        public void run() {
-                            IsInitialVoiceFinished=true;
-                        }
-                    }, 1000);
-                } else {
-                    Log.e("TTS", "Initilization Failed!");
-                }
-            }
-        });
+       textToSpeech("Tap on your screen, Please speak your email address, spell out email address carefully. \n Sample \n\n j \n\n o\n\n h\n\n n\n\n d\n\n o\n\n e\n\n at gmail.com \n\n johndoe@gmail.com. \n Tap in 3 \n\n 2 \n\n 1");
 
         return view;
 
@@ -137,46 +124,39 @@ public class EmailFragment extends Fragment {
 
             String emailPattern = "[a-zA-Z0-9._-]+@[a-z]+\\.+[a-z]+";
 
-
-////            if(emailEditText.getText().toString().isEmpty()) {
-////                speak("Please enter your email address");
-////            }else {
-//                if (emailEditText.getText().toString().trim().matches(emailPattern)) {
-//                    speak("Valid Email, Please confirm email \n "+ emailEditText.getText()+ "\n \n \nTap below screen to continue");
-//                } else {
-//                    speak("Invalid Email, Please tap screen again");
-//                }
-
-
             if (emailEditText.getText().toString().trim().matches(emailPattern)) {
-                tts = new TextToSpeech(getContext(), new TextToSpeech.OnInitListener() {
-                    @Override
-                    public void onInit(int status) {
-                        if (status == TextToSpeech.SUCCESS) {
-                            int result = tts.setLanguage(Locale.ENGLISH);
-                            if (result == TextToSpeech.LANG_MISSING_DATA || result == TextToSpeech.LANG_NOT_SUPPORTED) {
-                                Log.e("TTS", "This Language is not supported");
-                            }
-                            speak("Valid Email, Please confirm email \n "+ emailEditText.getText()+ "\n \n \nTap below screen to continue");
-                            new Handler().postDelayed(new Runnable() {
-                                @Override
-                                public void run() {
-                                    IsInitialVoiceFinished=true;
-                                }
-                            }, 1000);
-                        } else {
-                            Log.e("TTS", "Initilization Failed!");
-                        }
-                    }
-                });
+                textToSpeech("Valid Email, Please confirm email \n "+ emailEditText.getText()+ "\n \n \nTap below screen to continue");
 
+            }   else {
+               textToSpeech("Invalid Email, Please tap screen again");
             }
-
-
-
 
         }
         super.onActivityResult(requestCode, resultCode, data);
+    }
+
+    public void textToSpeech(final String statement){
+        tts = new TextToSpeech(getContext(), new TextToSpeech.OnInitListener() {
+            @Override
+            public void onInit(int status) {
+                if (status == TextToSpeech.SUCCESS) {
+                    int result = tts.setLanguage(Locale.ENGLISH);
+                    if (result == TextToSpeech.LANG_MISSING_DATA || result == TextToSpeech.LANG_NOT_SUPPORTED) {
+                        Log.e("TTS", "This Language is not supported");
+                    }
+                    speak(statement);
+                    new Handler().postDelayed(new Runnable() {
+                        @Override
+                        public void run() {
+                            IsInitialVoiceFinished=true;
+                        }
+                    }, 1000);
+                } else {
+                    Log.e("TTS", "Initilization Failed!");
+                }
+            }
+        });
+
     }
 
 

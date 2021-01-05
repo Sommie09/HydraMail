@@ -126,7 +126,7 @@ public class MessageFragment extends Fragment {
                         }
                     }, 3000);
                 } else {
-                    Log.e("TTS", "Initilization Failed!");
+                    Log.e("TTS", "Initialization Failed!");
                 }
             }
         });
