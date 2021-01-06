@@ -106,6 +106,14 @@ public class ToFragment extends Fragment {
 
         IsInitialVoiceFinished = false;
 
+
+        textToSpeech("Tap on your screen, Please speak recipient email, spell out email address carefully. \n Sample \n\n j \n\n o\n\n h\n\n n\n\n d\n\n o\n\n e\n\n at gmail.com \n\n johndoe@gmail.com. \n Tap in 3 \n\n 2 \n\n 1");
+
+        return view;
+
+    }
+
+    public void textToSpeech(final String statement){
         tts = new TextToSpeech(getContext(), new TextToSpeech.OnInitListener() {
             @Override
             public void onInit(int status) {
@@ -114,7 +122,7 @@ public class ToFragment extends Fragment {
                     if (result == TextToSpeech.LANG_MISSING_DATA || result == TextToSpeech.LANG_NOT_SUPPORTED) {
                         Log.e("TTS", "This Language is not supported");
                     }
-                    speak("Tap on your screen, Please speak recipient email, spell out email address carefully. \n Sample \n\n j \n\n o\n\n h\n\n n\n\n d\n\n o\n\n e\n\n at gmail.com \n\n johndoe@gmail.com. \n Tap in 3 \n\n 2 \n\n 1");
+                    speak(statement);
                     new Handler().postDelayed(new Runnable() {
                         @Override
                         public void run() {
@@ -126,9 +134,6 @@ public class ToFragment extends Fragment {
                 }
             }
         });
-
-
-        return view;
 
     }
 
@@ -154,12 +159,12 @@ public class ToFragment extends Fragment {
             String emailPattern = "[a-zA-Z0-9._-]+@[a-z]+\\.+[a-z]+";
 
             if(toEditText.getText().toString().isEmpty()) {
-                speak("Please enter email address");
+                textToSpeech("Please enter email address");
             }else {
                     if (toEditText.getText().toString().trim().matches(emailPattern)) {
-                        speak("Valid Email, Please confirm message \n " + toEditText.getText() + "\n \n \nTap below screen to continue");
+                        textToSpeech("Valid Email, Please confirm message \n " + toEditText.getText() + "\n \n \nTap below screen to continue");
                     } else {
-                        speak("Invalid Email, Please tap screen again");
+                        textToSpeech("Invalid Email, Please tap screen again");
                     }
                 }
 

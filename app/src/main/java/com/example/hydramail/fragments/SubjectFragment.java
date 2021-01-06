@@ -109,6 +109,12 @@ public class SubjectFragment extends Fragment {
 
         IsInitialVoiceFinished = false;
 
+        textToSpeech("Tap on your screen, Please speak subject of your mail");
+
+        return view;
+    }
+
+    public void textToSpeech(final String statement){
         tts = new TextToSpeech(getContext(), new TextToSpeech.OnInitListener() {
             @Override
             public void onInit(int status) {
@@ -117,7 +123,7 @@ public class SubjectFragment extends Fragment {
                     if (result == TextToSpeech.LANG_MISSING_DATA || result == TextToSpeech.LANG_NOT_SUPPORTED) {
                         Log.e("TTS", "This Language is not supported");
                     }
-                    speak("Tap on your screen, Please speak subject of your mail");
+                    speak(statement);
                     new Handler().postDelayed(new Runnable() {
                         @Override
                         public void run() {
@@ -130,8 +136,6 @@ public class SubjectFragment extends Fragment {
             }
         });
 
-
-        return view;
     }
 
     private void speak(String text){
@@ -151,9 +155,9 @@ public class SubjectFragment extends Fragment {
             subjectEditText.setText(matches.get(0));
 
             if(subjectEditText.getText().toString().isEmpty()) {
-                speak("Please enter email subject");
+                textToSpeech("Please enter email subject");
             }else{
-                speak("Valid, Please confirm subject \n "+ subjectEditText.getText()+ "\n \n \nTap below screen to continue");
+                textToSpeech("Valid, Please confirm subject \n "+ subjectEditText.getText()+ "\n \n \nTap below screen to continue");
 
             }
         }

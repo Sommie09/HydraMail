@@ -110,27 +110,7 @@ public class MessageFragment extends Fragment {
 
         IsInitialVoiceFinished = false;
 
-        tts = new TextToSpeech(getContext(), new TextToSpeech.OnInitListener() {
-            @Override
-            public void onInit(int status) {
-                if (status == TextToSpeech.SUCCESS) {
-                    int result = tts.setLanguage(Locale.ENGLISH);
-                    if (result == TextToSpeech.LANG_MISSING_DATA || result == TextToSpeech.LANG_NOT_SUPPORTED) {
-                        Log.e("TTS", "This Language is not supported");
-                    }
-                    speak("Tap on your screen, Please speak email message");
-                    new Handler().postDelayed(new Runnable() {
-                        @Override
-                        public void run() {
-                            IsInitialVoiceFinished=true;
-                        }
-                    }, 3000);
-                } else {
-                    Log.e("TTS", "Initialization Failed!");
-                }
-            }
-        });
-
+        textToSpeech("Tap on your screen, Please speak email message");
 
         return view;
     }
@@ -153,13 +133,37 @@ public class MessageFragment extends Fragment {
 
 
             if(messageEditText.getText().toString().isEmpty()) {
-                speak("Please enter email message");
+                textToSpeech("Please enter email message");
             }else{
-                speak("Valid \n \n, Please confirm message \n "+ messageEditText.getText()+ "\n \n \nTap below screen to continue");
+                textToSpeech("Valid \n \n, Please confirm message \n "+ messageEditText.getText()+ "\n \n \nTap below screen to continue");
 
             }
         }
         super.onActivityResult(requestCode, resultCode, data);
+    }
+
+    public void textToSpeech(final String statement){
+        tts = new TextToSpeech(getContext(), new TextToSpeech.OnInitListener() {
+            @Override
+            public void onInit(int status) {
+                if (status == TextToSpeech.SUCCESS) {
+                    int result = tts.setLanguage(Locale.ENGLISH);
+                    if (result == TextToSpeech.LANG_MISSING_DATA || result == TextToSpeech.LANG_NOT_SUPPORTED) {
+                        Log.e("TTS", "This Language is not supported");
+                    }
+                    speak(statement);
+                    new Handler().postDelayed(new Runnable() {
+                        @Override
+                        public void run() {
+                            IsInitialVoiceFinished=true;
+                        }
+                    }, 1000);
+                } else {
+                    Log.e("TTS", "Initilization Failed!");
+                }
+            }
+        });
+
     }
 
 

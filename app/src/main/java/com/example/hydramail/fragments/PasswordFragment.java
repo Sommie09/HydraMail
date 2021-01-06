@@ -102,6 +102,13 @@ public class PasswordFragment extends Fragment {
 
         IsInitialVoiceFinished = false;
 
+        textToSpeech("Tap on your screen, Please spell out password carefully. \n Sample \n\n a \n\n b\n\n c\n\n d\n\n 1\n\n 2\n\n 3\n\n\n\n abc123 \n Tap in 3 \n\n 2 \n\n 1");
+
+        return view;
+    }
+
+
+    public void textToSpeech(final String statement){
         tts = new TextToSpeech(getContext(), new TextToSpeech.OnInitListener() {
             @Override
             public void onInit(int status) {
@@ -110,7 +117,7 @@ public class PasswordFragment extends Fragment {
                     if (result == TextToSpeech.LANG_MISSING_DATA || result == TextToSpeech.LANG_NOT_SUPPORTED) {
                         Log.e("TTS", "This Language is not supported");
                     }
-                    speak("Tap on your screen, Please spell out password carefully. \n Sample \n\n a \n\n b\n\n c\n\n d\n\n 1\n\n 2\n\n 3\n\n\n\n abc123 \n Tap in 3 \n\n 2 \n\n 1");
+                    speak(statement);
                     new Handler().postDelayed(new Runnable() {
                         @Override
                         public void run() {
@@ -123,8 +130,6 @@ public class PasswordFragment extends Fragment {
             }
         });
 
-
-        return view;
     }
 
 
@@ -139,9 +144,9 @@ public class PasswordFragment extends Fragment {
             passwordEditText.setText(spaces);
 
             if(passwordEditText.getText().toString().isEmpty()) {
-                speak("Please enter password");
+                textToSpeech("Please enter password");
             }else{
-                speak("Valid, Please confirm password \n "+ passwordEditText.getText()+ "\n \n \nTap below screen to continue");
+                textToSpeech("Valid, Please confirm password \n "+ passwordEditText.getText()+ "\n \n \nTap below screen to continue");
 
             }
         }

@@ -105,7 +105,7 @@ public class EmailFragment extends Fragment {
 
         IsInitialVoiceFinished = false;
 
-       textToSpeech("Tap on your screen, Please speak your email address, spell out email address carefully. \n Sample \n\n j \n\n o\n\n h\n\n n\n\n d\n\n o\n\n e\n\n at gmail.com \n\n johndoe@gmail.com. \n Tap in 3 \n\n 2 \n\n 1");
+        textToSpeech("Tap on your screen, Please speak your email address, spell out email address carefully. \n Sample \n\n j \n\n o\n\n h\n\n n\n\n d\n\n o\n\n e\n\n at gmail.com \n\n johndoe@gmail.com. \n Tap in 3 \n\n 2 \n\n 1");
 
         return view;
 
