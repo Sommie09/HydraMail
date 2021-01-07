@@ -1,6 +1,7 @@
 package com.example.hydramail;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.constraintlayout.widget.ConstraintLayout;
 
 import android.content.Intent;
 import android.os.Build;
@@ -11,6 +12,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 
+import com.example.hydramail.fragments.EmailFragment;
 import com.example.hydramail.sentmails.view.SentMailsActivity;
 
 import java.util.Locale;
@@ -18,18 +20,28 @@ import java.util.Locale;
 public class ChooseAccount extends AppCompatActivity {
     private TextToSpeech tts;
     private boolean IsInitialVoiceFinished;
-    private Button chooseAccount;
+    private Button loginButton;
+    private ConstraintLayout loginScreen;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_choose_account);
 
-        chooseAccount = findViewById(R.id.chooseAccount);
-        chooseAccount.setOnClickListener(new View.OnClickListener() {
+        loginButton = findViewById(R.id.loginButton);
+        loginButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(ChooseAccount.this, SentMailsActivity.class);
+                Intent intent = new Intent(ChooseAccount.this, LoginDetails.class);
+                startActivity(intent);
+            }
+        });
+
+        loginScreen = findViewById(R.id.loginLayout);
+        loginScreen.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(ChooseAccount.this, LoginDetails.class);
                 startActivity(intent);
             }
         });
@@ -45,7 +57,7 @@ public class ChooseAccount extends AppCompatActivity {
                     if (result == TextToSpeech.LANG_MISSING_DATA || result == TextToSpeech.LANG_NOT_SUPPORTED) {
                         Log.e("TTS", "This Language is not supported");
                     }
-                  speak("Please choose a mail account now");
+                  speak("Please tap screen to login");
                     new Handler().postDelayed(new Runnable() {
                         @Override
                         public void run() {

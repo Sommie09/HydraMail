@@ -92,7 +92,7 @@ public class EmailFragment extends Fragment {
                     PasswordFragment passwordFragment = new PasswordFragment();
                     passwordFragment.setArguments(bundle);
 
-                    fragmentTransaction.replace(R.id.fragment_container, passwordFragment);
+                    fragmentTransaction.replace(R.id.fragment_container_login_details, passwordFragment);
                     fragmentTransaction.commit();
 
                 }

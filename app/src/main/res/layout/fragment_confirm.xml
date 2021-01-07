@@ -82,7 +82,7 @@
         android:id="@+id/sendButton"
         android:layout_width="match_parent"
         android:layout_height="110dp"
-        android:layout_marginTop="170dp"
+        android:layout_marginTop="100dp"
         android:layout_marginLeft="5dp"
         android:layout_marginRight="5dp"
         android:backgroundTint="@color/colorBlack"

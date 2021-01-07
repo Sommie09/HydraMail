@@ -7,7 +7,6 @@ import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
@@ -15,19 +14,15 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.hydramail.MainActivity;
+import com.example.hydramail.MessageDetails;
 import com.example.hydramail.R;
-import com.example.hydramail.fragments.ToFragment;
 import com.example.hydramail.sentmails.database.model.DatabaseHelper;
-import com.example.hydramail.sentmails.database.model.Mails;
 
 import java.util.ArrayList;
-import java.util.List;
 
 public class SentMailsActivity extends AppCompatActivity {
     private MailAdapter mailAdapter;
@@ -136,7 +131,7 @@ public class SentMailsActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         switch(item.getItemId()){
             case R.id.add_menu:
-                Intent intent = new Intent(SentMailsActivity.this, MainActivity.class);
+                Intent intent = new Intent(SentMailsActivity.this, MessageDetails.class);
                 startActivity(intent);
                 return true;
             case R.id.delete_all:

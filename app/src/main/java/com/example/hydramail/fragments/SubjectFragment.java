@@ -19,7 +19,6 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
-import com.example.hydramail.MainActivity;
 import com.example.hydramail.R;
 import com.google.android.material.textfield.TextInputEditText;
 
@@ -101,7 +100,7 @@ public class SubjectFragment extends Fragment {
                 MessageFragment messageFragment = new MessageFragment();
                 messageFragment.setArguments(bundle);
 
-                fragmentTransaction.replace(R.id.fragment_container, messageFragment);
+                fragmentTransaction.replace(R.id.fragment_container_message_details, messageFragment);
                 fragmentTransaction.commit();
             }
         });

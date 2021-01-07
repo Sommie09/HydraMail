@@ -4,6 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:id="@+id/loginLayout"
+    android:clickable="true"
     tools:context=".ChooseAccount">
 
     <ImageView
@@ -21,12 +23,12 @@
         tools:ignore="VectorDrawableCompat" />
 
     <Button
-        android:id="@+id/chooseAccount"
+        android:id="@+id/loginButton"
         android:layout_width="300dp"
         android:layout_height="wrap_content"
         android:layout_marginBottom="144dp"
         android:background="@drawable/button"
-        android:text="CHOOSE ACCOUNT"
+        android:text="LOGIN"
         android:textColor="#FFFFFF"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"

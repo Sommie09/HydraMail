@@ -97,7 +97,7 @@ public class ToFragment extends Fragment {
                 SubjectFragment subjectFragment = new SubjectFragment();
                 subjectFragment.setArguments(bundle);
 
-                fragmentTransaction.replace(R.id.fragment_container, subjectFragment);
+                fragmentTransaction.replace(R.id.fragment_container_message_details, subjectFragment);
                 fragmentTransaction.commit();
 
             }

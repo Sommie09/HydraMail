@@ -19,8 +19,9 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
-import com.example.hydramail.MainActivity;
+import com.example.hydramail.MessageDetails;
 import com.example.hydramail.R;
+import com.example.hydramail.sentmails.view.SentMailsActivity;
 import com.google.android.material.textfield.TextInputEditText;
 
 import java.util.ArrayList;
@@ -80,22 +81,28 @@ public class PasswordFragment extends Fragment {
         nextButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Bundle bundle = requireArguments();
+                
 
-                String password = passwordEditText.getText().toString();
-                String email = bundle.getString("Email");
 
-                bundle.putString("Email", email);
-                bundle.putString("Password", password);
+//                Bundle bundle = requireArguments();
+//
+//                String password = passwordEditText.getText().toString();
+//                String email = bundle.getString("Email");
+//
+//                bundle.putString("Email", email);
+//                bundle.putString("Password", password);
+//
+//                FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
+//                FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+//
+//                ToFragment toFragment = new ToFragment();
+//                toFragment.setArguments(bundle);
+//
+//                fragmentTransaction.replace(R.id.fragment_container_login_details, toFragment);
+//                fragmentTransaction.commit();
 
-                FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
-                FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-
-                ToFragment toFragment = new ToFragment();
-                toFragment.setArguments(bundle);
-
-                fragmentTransaction.replace(R.id.fragment_container, toFragment);
-                fragmentTransaction.commit();
+                Intent intent = new Intent(getActivity(), SentMailsActivity.class);
+                startActivity(intent);
             }
         });
 

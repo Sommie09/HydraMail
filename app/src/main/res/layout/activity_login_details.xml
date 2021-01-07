@@ -3,8 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    tools:context=".StartActivity">
+    android:orientation="vertical">
 
 
     <FrameLayout
@@ -12,7 +11,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         tools:context= ".Activities.MainActivity"
-        android:id="@+id/fragment_container">
+        android:id="@+id/fragment_container_login_details">
 
     </FrameLayout>
 
