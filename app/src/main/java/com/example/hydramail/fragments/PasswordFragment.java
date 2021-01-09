@@ -19,9 +19,7 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
-import com.example.hydramail.MessageDetails;
 import com.example.hydramail.R;
-import com.example.hydramail.sentmails.view.SentMailsActivity;
 import com.google.android.material.textfield.TextInputEditText;
 
 import java.util.ArrayList;
@@ -81,28 +79,23 @@ public class PasswordFragment extends Fragment {
         nextButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                
+                Bundle bundle = requireArguments();
 
+                String password = passwordEditText.getText().toString();
+                String email = bundle.getString("Email");
 
-//                Bundle bundle = requireArguments();
-//
-//                String password = passwordEditText.getText().toString();
-//                String email = bundle.getString("Email");
-//
-//                bundle.putString("Email", email);
-//                bundle.putString("Password", password);
-//
-//                FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
-//                FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-//
-//                ToFragment toFragment = new ToFragment();
-//                toFragment.setArguments(bundle);
-//
-//                fragmentTransaction.replace(R.id.fragment_container_login_details, toFragment);
-//                fragmentTransaction.commit();
+                bundle.putString("Email", email);
+                bundle.putString("Password", password);
 
-                Intent intent = new Intent(getActivity(), SentMailsActivity.class);
-                startActivity(intent);
+                FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
+                FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+
+                ToFragment toFragment = new ToFragment();
+                toFragment.setArguments(bundle);
+
+                fragmentTransaction.replace(R.id.fragment_container_message_details, toFragment);
+                fragmentTransaction.commit();
+
             }
         });
 
@@ -120,7 +113,7 @@ public class PasswordFragment extends Fragment {
             @Override
             public void onInit(int status) {
                 if (status == TextToSpeech.SUCCESS) {
-                    int result = tts.setLanguage(Locale.ENGLISH);
+                    int result = tts.setLanguage(Locale.UK);
                     if (result == TextToSpeech.LANG_MISSING_DATA || result == TextToSpeech.LANG_NOT_SUPPORTED) {
                         Log.e("TTS", "This Language is not supported");
                     }
@@ -148,7 +141,8 @@ public class PasswordFragment extends Fragment {
             ArrayList<String> matches = data.getStringArrayListExtra(RecognizerIntent.EXTRA_RESULTS);
             String rawInput = matches.get(0);
             String spaces = rawInput.replaceAll("\\s", "");
-            passwordEditText.setText(spaces);
+            String spacesSmall = spaces.toLowerCase();
+            passwordEditText.setText(spacesSmall);
 
             if(passwordEditText.getText().toString().isEmpty()) {
                 textToSpeech("Please enter password");

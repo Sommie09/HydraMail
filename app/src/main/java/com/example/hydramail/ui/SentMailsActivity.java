@@ -1,4 +1,4 @@
-package com.example.hydramail.sentmails.view;
+package com.example.hydramail.ui;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -9,7 +9,11 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
 import android.database.Cursor;
+import android.os.Build;
 import android.os.Bundle;
+import android.os.Handler;
+import android.speech.tts.TextToSpeech;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -18,17 +22,20 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.hydramail.MessageDetails;
+import com.example.hydramail.adapters.MailAdapter;
 import com.example.hydramail.R;
-import com.example.hydramail.sentmails.database.model.DatabaseHelper;
+import com.example.hydramail.database.DatabaseHelper;
 
 import java.util.ArrayList;
+import java.util.Locale;
 
 public class SentMailsActivity extends AppCompatActivity {
     private MailAdapter mailAdapter;
     private RecyclerView recyclerView;
     private ImageView envelop_icon;
     private TextView no_mails_text;
+    private TextToSpeech tts;
+    private boolean IsInitialVoiceFinished;
 
     ArrayList<String> mail_id, mail_recipient, mail_subject, mail_message, mail_timestamp;
     private DatabaseHelper databaseHelper;
@@ -40,6 +47,8 @@ public class SentMailsActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sent_mails);
+
+        IsInitialVoiceFinished = false;
 
         Toolbar toolbar = findViewById(R.id.tool_bar);
         setSupportActionBar(toolbar);
@@ -94,9 +103,6 @@ public class SentMailsActivity extends AppCompatActivity {
 
         ItemTouchHelper itemTouchHelper = new ItemTouchHelper(itemTouchHelperCallBack);
         itemTouchHelper.attachToRecyclerView(recyclerView);
-
-
-
     }
 
     void storeDataInArray(){
@@ -107,7 +113,9 @@ public class SentMailsActivity extends AppCompatActivity {
             no_mails_text.setVisibility(View.VISIBLE);
 
             Toast.makeText(this, "No Data", Toast.LENGTH_SHORT).show();
+            textToSpeech("Login Successful \n You have no messages \n Tap top right of screen to send new message");
         }else{
+            textToSpeech("You have" +cursor.getCount()+ "message \n Tap top right of screen to send new message");
             while(cursor.moveToNext()){
                 mail_id.add(cursor.getString(0));
                 mail_recipient.add(cursor.getString(1));
@@ -149,6 +157,61 @@ public class SentMailsActivity extends AppCompatActivity {
                 return super.onOptionsItemSelected(item);
         }
     }
+
+    public void textToSpeech(final String statement){
+        tts = new TextToSpeech(this, new TextToSpeech.OnInitListener() {
+            @Override
+            public void onInit(int status) {
+                if (status == TextToSpeech.SUCCESS) {
+                    int result = tts.setLanguage(Locale.UK);
+                    if (result == TextToSpeech.LANG_MISSING_DATA || result == TextToSpeech.LANG_NOT_SUPPORTED) {
+                        Log.e("TTS", "This Language is not supported");
+                    }
+                    speak(statement);
+                    new Handler().postDelayed(new Runnable() {
+                        @Override
+                        public void run() {
+                            IsInitialVoiceFinished=true;
+                        }
+                    }, 1000);
+                } else {
+                    Log.e("TTS", "Initilization Failed!");
+                }
+            }
+        });
+
+    }
+
+    private void speak(String text){
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            tts.speak(text, TextToSpeech.QUEUE_FLUSH, null, null);
+        }else{
+            tts.speak(text, TextToSpeech.QUEUE_FLUSH, null);
+        }
+    }
+
+
+    @Override
+    public void onStop()
+    {
+        super.onStop();
+
+        if(tts != null){
+            tts.shutdown();
+        }
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+
+        if(tts != null){
+            tts.shutdown();
+        }
+    }
+
+
 
 
 }

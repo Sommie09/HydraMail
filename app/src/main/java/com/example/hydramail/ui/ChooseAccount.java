@@ -1,4 +1,4 @@
-package com.example.hydramail;
+package com.example.hydramail.ui;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
@@ -12,8 +12,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 
-import com.example.hydramail.fragments.EmailFragment;
-import com.example.hydramail.sentmails.view.SentMailsActivity;
+import com.example.hydramail.R;
 
 import java.util.Locale;
 
@@ -32,7 +31,7 @@ public class ChooseAccount extends AppCompatActivity {
         loginButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(ChooseAccount.this, LoginDetails.class);
+                Intent intent = new Intent(ChooseAccount.this, MessageDetails.class);
                 startActivity(intent);
             }
         });
@@ -41,7 +40,7 @@ public class ChooseAccount extends AppCompatActivity {
         loginScreen.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(ChooseAccount.this, LoginDetails.class);
+                Intent intent = new Intent(ChooseAccount.this, MessageDetails.class);
                 startActivity(intent);
             }
         });
@@ -53,11 +52,12 @@ public class ChooseAccount extends AppCompatActivity {
             @Override
             public void onInit(int status) {
                 if (status == TextToSpeech.SUCCESS) {
-                    int result = tts.setLanguage(Locale.ENGLISH);
+                    int result = tts.setLanguage(Locale.UK);
                     if (result == TextToSpeech.LANG_MISSING_DATA || result == TextToSpeech.LANG_NOT_SUPPORTED) {
                         Log.e("TTS", "This Language is not supported");
                     }
-                  speak("Please tap screen to login");
+                  speak("Welcome to Hydra Mail \n Hydra Mail is a voice based email application that would enable you send your emails \n Please listen to " +
+                          "the instructions carefully \n Tap screen to start");
                     new Handler().postDelayed(new Runnable() {
                         @Override
                         public void run() {

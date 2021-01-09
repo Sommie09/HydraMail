@@ -12,13 +12,12 @@
         android:roundIcon="@mipmap/ic_launcher_hydra"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".LoginDetails"></activity>
         <activity
-            android:name=".sentmails.view.SentMailsActivity"
+            android:name=".ui.SentMailsActivity"
             android:theme="@style/SentMailActivity"></activity>
-        <activity android:name=".ChooseAccount" />
+        <activity android:name=".ui.ChooseAccount" />
         <activity
-            android:name=".SplashScreen"
+            android:name=".ui.SplashScreen"
             android:theme="@style/SplashScreen">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -26,7 +25,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".MessageDetails" />
+        <activity android:name=".ui.MessageDetails" />
     </application>
 
 </manifest>

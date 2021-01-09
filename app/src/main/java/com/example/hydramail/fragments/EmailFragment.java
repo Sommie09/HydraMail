@@ -92,7 +92,7 @@ public class EmailFragment extends Fragment {
                     PasswordFragment passwordFragment = new PasswordFragment();
                     passwordFragment.setArguments(bundle);
 
-                    fragmentTransaction.replace(R.id.fragment_container_login_details, passwordFragment);
+                    fragmentTransaction.replace(R.id.fragment_container_message_details, passwordFragment);
                     fragmentTransaction.commit();
 
                 }
@@ -140,7 +140,7 @@ public class EmailFragment extends Fragment {
             @Override
             public void onInit(int status) {
                 if (status == TextToSpeech.SUCCESS) {
-                    int result = tts.setLanguage(Locale.ENGLISH);
+                    int result = tts.setLanguage(Locale.UK);
                     if (result == TextToSpeech.LANG_MISSING_DATA || result == TextToSpeech.LANG_NOT_SUPPORTED) {
                         Log.e("TTS", "This Language is not supported");
                     }

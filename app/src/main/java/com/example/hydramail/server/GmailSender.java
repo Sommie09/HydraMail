@@ -1,4 +1,4 @@
-package com.example.hydramail;
+package com.example.hydramail.server;
 
 import java.io.ByteArrayInputStream;
 import java.io.IOException;

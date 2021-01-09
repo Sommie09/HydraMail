@@ -1,4 +1,4 @@
-package com.example.hydramail.sentmails.view;
+package com.example.hydramail.adapters;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -12,13 +12,11 @@ import android.widget.TextView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.hydramail.R;
-import com.example.hydramail.sentmails.database.model.Mails;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.List;
 
 public class MailAdapter extends RecyclerView.Adapter<MailAdapter.MyViewHolder> {
 

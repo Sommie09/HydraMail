@@ -9,8 +9,6 @@ import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentTransaction;
 
 import android.os.Handler;
 import android.speech.tts.TextToSpeech;
@@ -20,14 +18,13 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import com.example.hydramail.GmailSender;
+import com.example.hydramail.server.GmailSender;
 import com.example.hydramail.R;
-import com.example.hydramail.sentmails.database.model.DatabaseHelper;
-import com.example.hydramail.sentmails.database.model.Mails;
-import com.example.hydramail.sentmails.view.MailAdapter;
-import com.example.hydramail.sentmails.view.SentMailsActivity;
+import com.example.hydramail.database.DatabaseHelper;
+import com.example.hydramail.model.Mails;
+import com.example.hydramail.adapters.MailAdapter;
+import com.example.hydramail.ui.SentMailsActivity;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -91,6 +88,27 @@ public class ConfirmFragment extends Fragment {
                 Intent i = new Intent(getActivity(), SentMailsActivity.class);
                 startActivity(i);
                 ((Activity) getActivity()).overridePendingTransition(0, 0);
+
+                tts = new TextToSpeech(getContext(), new TextToSpeech.OnInitListener() {
+                    @Override
+                    public void onInit(int status) {
+                        if (status == TextToSpeech.SUCCESS) {
+                            int result = tts.setLanguage(Locale.ENGLISH);
+                            if (result == TextToSpeech.LANG_MISSING_DATA || result == TextToSpeech.LANG_NOT_SUPPORTED) {
+                                Log.e("TTS", "This Language is not supported");
+                            }
+                            speak("Message sent successfully");
+                            new Handler().postDelayed(new Runnable() {
+                                @Override
+                                public void run() {
+                                    IsInitialVoiceFinished=true;
+                                }
+                            }, 3000);
+                        } else {
+                            Log.e("TTS", "Initialization Failed!");
+                        }
+                    }
+                });
 
 
 
@@ -194,6 +212,7 @@ public class ConfirmFragment extends Fragment {
         protected void onPostExecute(Void result) {
             super.onPostExecute(result);
         }
+
     }
 }
 

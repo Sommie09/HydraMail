@@ -106,8 +106,7 @@ public class ToFragment extends Fragment {
 
         IsInitialVoiceFinished = false;
 
-
-        textToSpeech("Tap on your screen, Please speak recipient email, spell out email address carefully. \n Sample \n\n j \n\n o\n\n h\n\n n\n\n d\n\n o\n\n e\n\n at gmail.com \n\n johndoe@gmail.com. \n Tap in 3 \n\n 2 \n\n 1");
+        textToSpeech("Login Successful \n Tap on your screen, Please speak recipient email, spell out email address carefully. Sample \n\n j \n\n o\n\n h\n\n n\n\n d\n\n o\n\n e\n\n at gmail.com \n\n johndoe@gmail.com. \n Tap in 3 \n\n 2 \n\n 1");
 
         return view;
 
@@ -118,7 +117,7 @@ public class ToFragment extends Fragment {
             @Override
             public void onInit(int status) {
                 if (status == TextToSpeech.SUCCESS) {
-                    int result = tts.setLanguage(Locale.ENGLISH);
+                    int result = tts.setLanguage(Locale.UK);
                     if (result == TextToSpeech.LANG_MISSING_DATA || result == TextToSpeech.LANG_NOT_SUPPORTED) {
                         Log.e("TTS", "This Language is not supported");
                     }
@@ -130,7 +129,7 @@ public class ToFragment extends Fragment {
                         }
                     }, 1000);
                 } else {
-                    Log.e("TTS", "Initilization Failed!");
+                    Log.e("TTS", "Initialization Failed!");
                 }
             }
         });

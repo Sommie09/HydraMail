@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:id="@+id/loginLayout"
     android:clickable="true"
-    tools:context=".ChooseAccount">
+    tools:context=".ui.ChooseAccount">
 
     <ImageView
         android:id="@+id/imageView6"
@@ -28,7 +28,7 @@
         android:layout_height="wrap_content"
         android:layout_marginBottom="144dp"
         android:background="@drawable/button"
-        android:text="LOGIN"
+        android:text="START"
         android:textColor="#FFFFFF"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"

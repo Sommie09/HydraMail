@@ -1,4 +1,4 @@
-package com.example.hydramail.sentmails.database.model;
+package com.example.hydramail.model;
 
 public class Mails {
 

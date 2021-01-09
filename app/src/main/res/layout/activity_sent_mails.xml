@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".sentmails.view.SentMailsActivity">
+    tools:context=".ui.SentMailsActivity">
 
     <include
         android:id="@+id/tool_bar"
